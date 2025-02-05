@@ -1,4 +1,12 @@
+# ===================================================================================================
+# Imports: External
+# ===================================================================================================
+import os
 import wx
+
+# ===================================================================================================
+# Imports: Internal
+# ===================================================================================================
 
 from .abs_gui import MainFrame
 from .pakbuilder import PakBuilder
@@ -11,14 +19,20 @@ class KCDPakBuilderGui(MainFrame):
     KCD Paker GUI
     '''
 
-    def __init__(self):
+
+
+    def __init__(self, version, author):
         '''
         Constructor
         '''
+        self._version = version
+        self._author = author
         self._paker = None
         super(KCDPakBuilderGui, self).__init__(None)
 
+        # Set Up GUI
         self._bind_events()
+        self._init_ui()
 
     def _bind_events(self):
         '''
@@ -26,6 +40,17 @@ class KCDPakBuilderGui(MainFrame):
         '''
         self.Bind(wx.EVT_BUTTON, self._on_start_pak, self.btn_start_pak)
         self.Bind(wx.EVT_BUTTON, self._on_stop_pak, self.btn_stop_pak)
+
+    def _init_ui(self):
+        '''
+        Update and override any UI parameters post parent initialisation
+        '''
+        self.SetTitle("KCD PAK Builder (v%s) by %s" % (self._version, self._author))
+
+        # Update Icon
+        icon = wx.Icon()
+        icon.CopyFromBitmap(wx.Bitmap(self._get_icon_path()))
+        self.SetIcon(icon)
 
     def _on_start_pak(self, event):
         '''
@@ -101,3 +126,25 @@ class KCDPakBuilderGui(MainFrame):
         '''
         return self._paker
 
+
+    # ===================================================================================================
+    # Internal Helpers
+    # ===================================================================================================
+    def _get_icon_path(self):
+        '''
+        Gets the path to the GUI Icon (.ico) file
+
+        :return: The path to the GUI Icon File
+        :rtype: str
+        '''
+        cwd = os.getcwd()
+        icon_path = None
+
+        if "_MEI" in __file__: # (Packed)
+            icon_path = os.path.join(
+                os.path.dirname(os.path.dirname(__file__)), "resources", "icon.ico"
+            )
+        else: # (Not Packed)
+            icon_path = os.path.join(os.path.dirname(__file__), "resources", "icon.ico")
+
+        return icon_path
