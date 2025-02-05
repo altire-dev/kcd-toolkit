@@ -1,10 +1,6 @@
 # IDE Files
 .idea/
 
-# Build Files
-kcd-pak-builder/build
-kcd-pak-builder/dist
-
 # Binary Files
 *.pyc
 
