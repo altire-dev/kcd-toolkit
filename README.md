@@ -2,13 +2,19 @@
 Welcome to the Kingdom Come Deliverance Toolkit!
 </br></br>
 
-In this repository you'll find a collection of tools, utilities, scripts, and more for working with the Kingdom Come Deliverance games from Warhorse Studios
+In this repository you'll find a collection of tools, utilities, scripts, and more for working with the Kingdom Come Deliverance games from Warhorse Studios.
 
-Whats the aim?
+<h2>About this Project</h2>
+Unfortunately, the modding community and scene for the first KCD game never took off. 
+</br></br>
+To change this for KCD2, we need to this community to work together to develop and share not just ideas, knowledge and experience, but also tools that make modding the game easier.
+</br></br>
+By making modding more achievable and lowering the barrier to entry, we can help to increase the quantity and quality of mods that are available.
+</br></br>
+This project aims to meet this requirement by providing a centralised location for those tools to exist.
 
 <h2>What's Included</h2>
-The Toolkit currently contains the following:
-</br></br>
+</br>
 
 <table>
   <thead>
