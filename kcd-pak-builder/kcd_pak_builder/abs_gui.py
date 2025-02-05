@@ -20,7 +20,7 @@ _ = gettext.gettext
 class MainFrame ( wx.Frame ):
 
     def __init__( self, parent ):
-        wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.Size( 500,300 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
+        wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = _(u"KCD PAK Builder"), pos = wx.DefaultPosition, size = wx.Size( 600,400 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
 
         self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
 
@@ -64,6 +64,8 @@ class MainFrame ( wx.Frame ):
         bSizer6.Add( self.btn_start_pak, 1, wx.ALL, 5 )
 
         self.btn_stop_pak = wx.Button( self.m_panel3, wx.ID_ANY, _(u"Cancel"), wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.btn_stop_pak.Enable( False )
+
         bSizer6.Add( self.btn_stop_pak, 1, wx.ALL, 5 )
 
 
@@ -71,7 +73,7 @@ class MainFrame ( wx.Frame ):
 
         bs_status = wx.BoxSizer( wx.HORIZONTAL )
 
-        self.label_status = wx.StaticText( self.m_panel3, wx.ID_ANY, _(u"WAITING..."), wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.label_status = wx.StaticText( self.m_panel3, wx.ID_ANY, _(u"Waiting..."), wx.DefaultPosition, wx.DefaultSize, wx.ALIGN_CENTER_HORIZONTAL )
         self.label_status.Wrap( -1 )
 
         bs_status.Add( self.label_status, 1, wx.ALL|wx.EXPAND, 5 )
@@ -83,8 +85,13 @@ class MainFrame ( wx.Frame ):
         self.pak_pg_bar.SetValue( 0 )
         bSizer8.Add( self.pak_pg_bar, 0, wx.ALL|wx.EXPAND, 5 )
 
-        self.m_textCtrl2 = wx.TextCtrl( self.m_panel3, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.TE_MULTILINE|wx.TE_READONLY )
-        bSizer8.Add( self.m_textCtrl2, 0, wx.ALL|wx.EXPAND, 5 )
+        sbSizer1 = wx.StaticBoxSizer( wx.StaticBox( self.m_panel3, wx.ID_ANY, _(u"Log") ), wx.VERTICAL )
+
+        self.output_log = wx.TextCtrl( sbSizer1.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.TE_DONTWRAP|wx.TE_MULTILINE|wx.TE_READONLY )
+        sbSizer1.Add( self.output_log, 1, wx.ALL|wx.EXPAND, 5 )
+
+
+        bSizer8.Add( sbSizer1, 1, wx.EXPAND, 5 )
 
 
         self.m_panel3.SetSizer( bSizer8 )
