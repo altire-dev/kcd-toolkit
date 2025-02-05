@@ -37,3 +37,7 @@ Contributions are welcomed and encouraged for this project.
 To create a thriving modding community for KCD2, we need its members to share their knowledge, experience, and of course code!
 </br></br>
 Have you created something that you think might save other modders time, or that they might find useful? If so, <b>please consider submitting it in a pull request!</b>
+
+<h2>Community</h2>
+<a href="https://discord.gg/RuKE5uhz">Discord - KCD Modding Community</a>
+
