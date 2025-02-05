@@ -113,6 +113,13 @@ class KCDPakBuilderGui(MainFrame):
         log_msg = "[+] %s\n" % file
         self.output_log.write(log_msg)
 
+    def on_completion(self):
+        '''
+        Pak Completion Callback. To be called by PakBuilder when packing successfully completes
+        '''
+        self.btn_stop_pak.Disable()
+        self.btn_start_pak.Enable()
+
 
     # ===================================================================================================
     # Getters

@@ -42,6 +42,8 @@ class PakBuilder(Thread):
                 self._files_processed.append(file)
                 self._gui.on_file_processed(file)
 
+        self._gui.on_completion()
+
     def build_filelist(self):
         '''
         Builds the list of files to process in the target directory
