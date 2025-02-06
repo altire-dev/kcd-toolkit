@@ -1,9 +1,6 @@
-<h1>KCD Toolkit</h1>
-Welcome to the Kingdom Come Deliverance Toolkit!
-<br><br>
 <img src="images/banner.png" alt="Crypter Logo">
-</br></br>
-
+<hr>
+Welcome to the Kingdom Come Deliverence Toolkit!</br></br>
 In this repository you'll find a collection of tools, utilities, scripts, and more for working with the Kingdom Come Deliverance games from Warhorse Studios.
 
 <h2>What's Included</h2>
