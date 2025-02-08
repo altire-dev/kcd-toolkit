@@ -1,4 +1,6 @@
-pyinstaller -F --noconsole --clean ^
+pyinstaller ^
+    --noupx^
+    -F --noconsole --clean ^
     -n kcd-pak-builder^
     --upx-dir=..\resources\upx-4.2.4-win64^
     --icon=.\kcd_pak_builder\resources\icon.ico^
