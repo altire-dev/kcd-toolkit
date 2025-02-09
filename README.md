@@ -14,12 +14,14 @@ In this repository you'll find a collection of tools, utilities, scripts, and mo
   </thead>
   <tbody>
     <tr>
-      <td>KCD PAK Builder</td>
-      <td>0.0.2</td>
+      <td><a href="./kcd-pak-builder">KCD PAK Builder</a></td>
+      <td><a href="https://github.com/altire-dev/kcd-toolkit/releases/latest">0.0.3</a></td>
       <td>An application for quickly and easily turning a directory into a single game-ready PAK file</td>
     </tr>
   </tbody>
 </table>
+
+Binary distributions of the tools and applications can be found on the <a href="https://github.com/altire-dev/kcd-toolkit/releases/latest">Releases</a> page.
 
 <h2>About this Project</h2>
 Unfortunately, the modding community and scene for the first KCD game never took off. 
