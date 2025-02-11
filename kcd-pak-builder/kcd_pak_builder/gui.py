@@ -317,7 +317,7 @@ class KCDPakBuilderGui(MainFrame):
             new_status = "Cancelled"
             self.pak_pg_bar.SetValue(0)
         else:
-            new_status = "%s of %s (%s%%)" % (total_files, files_processed, percent_completion)
+            new_status = "%s of %s (%s%%)" % (files_processed, total_files, percent_completion)
         self.label_status.SetLabel(new_status)
 
         # Log file
