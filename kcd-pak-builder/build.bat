@@ -1,5 +1,4 @@
 pyinstaller ^
-    --noupx^
     -F --noconsole --clean ^
     -n kcd-pak-builder^
     --upx-dir=..\resources\upx-4.2.4-win64^
