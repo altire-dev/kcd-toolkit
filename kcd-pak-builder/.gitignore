@@ -4,3 +4,6 @@ dist/
 
 # PyInstaller Files
 *.spec
+
+# Config
+paker.cfg
