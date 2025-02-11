@@ -387,7 +387,7 @@ class KCDPakBuilderGui(MainFrame):
         :return: True if valid, otherwise False
         :rtype: bool
         '''
-        regex = re.compile("^[a-zA-Z0-9_.]*[a-zA-Z0-9_]$")
+        regex = re.compile("^[a-zA-Z0-9_.-]*[a-zA-Z0-9_-]$")
         if regex.match(filename):
             return True
         return False
