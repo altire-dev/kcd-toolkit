@@ -32,21 +32,6 @@ class MainFrame ( wx.Frame ):
         self.m_panel3 = wx.Panel( self.m_panel2, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
         bSizer8 = wx.BoxSizer( wx.VERTICAL )
 
-        bSizer4 = wx.BoxSizer( wx.HORIZONTAL )
-
-        self.m_staticText1 = wx.StaticText( self.m_panel3, wx.ID_ANY, _(u"PAK Output Directory"), wx.DefaultPosition, wx.DefaultSize, 0 )
-        self.m_staticText1.Wrap( -1 )
-
-        bSizer4.Add( self.m_staticText1, 3, wx.ALIGN_CENTER|wx.ALL, 5 )
-
-        self.dp_pak_out_dir = wx.DirPickerCtrl( self.m_panel3, wx.ID_ANY, wx.EmptyString, _(u"Select .pak Output Directory"), wx.DefaultPosition, wx.DefaultSize, wx.DIRP_DEFAULT_STYLE|wx.DIRP_DIR_MUST_EXIST )
-        self.dp_pak_out_dir.SetToolTip( _(u"The Directory that your .pak file will be saved to") )
-
-        bSizer4.Add( self.dp_pak_out_dir, 7, wx.ALL, 5 )
-
-
-        bSizer8.Add( bSizer4, 0, wx.EXPAND, 5 )
-
         bSizer41 = wx.BoxSizer( wx.HORIZONTAL )
 
         self.m_staticText11 = wx.StaticText( self.m_panel3, wx.ID_ANY, _(u"PAK Filename"), wx.DefaultPosition, wx.DefaultSize, 0 )
@@ -61,6 +46,21 @@ class MainFrame ( wx.Frame ):
 
 
         bSizer8.Add( bSizer41, 0, wx.EXPAND, 5 )
+
+        bSizer4 = wx.BoxSizer( wx.HORIZONTAL )
+
+        self.m_staticText1 = wx.StaticText( self.m_panel3, wx.ID_ANY, _(u"PAK Output Directory"), wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.m_staticText1.Wrap( -1 )
+
+        bSizer4.Add( self.m_staticText1, 3, wx.ALIGN_CENTER|wx.ALL, 5 )
+
+        self.dp_pak_out_dir = wx.DirPickerCtrl( self.m_panel3, wx.ID_ANY, wx.EmptyString, _(u"Select .pak Output Directory"), wx.DefaultPosition, wx.DefaultSize, wx.DIRP_DEFAULT_STYLE|wx.DIRP_DIR_MUST_EXIST )
+        self.dp_pak_out_dir.SetToolTip( _(u"The Directory that your .pak file will be saved to") )
+
+        bSizer4.Add( self.dp_pak_out_dir, 7, wx.ALL, 5 )
+
+
+        bSizer8.Add( bSizer4, 0, wx.EXPAND, 5 )
 
         bSizer5 = wx.BoxSizer( wx.HORIZONTAL )
 
