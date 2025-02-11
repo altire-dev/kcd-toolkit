@@ -43,9 +43,7 @@ class KCDPakBuilderGui(MainFrame):
         self._paker = None
 
         # Load Configuration
-        self._cfg_path = os.path.join(
-            os.path.dirname(__file__), "paker.cfg"
-        )
+        self._cfg_path = self._get_cfg_path()
         self._cfg = self._load_cfg()
         self._options_visible = self._cfg.get(self.CFG_KEY_SHOW_OPTIONS, True)
 
@@ -55,6 +53,7 @@ class KCDPakBuilderGui(MainFrame):
         # Set Up GUI
         self._bind_events()
         self._init_ui()
+        # self.write_to_log("[+] Config File Loaded: %s" % self._cfg_path)
 
     def _bind_events(self):
         '''
@@ -400,7 +399,6 @@ class KCDPakBuilderGui(MainFrame):
         :return: The path to the GUI Icon File
         :rtype: str
         '''
-        cwd = os.getcwd()
         icon_path = None
 
         if "_MEI" in __file__: # (Packed)
@@ -411,6 +409,22 @@ class KCDPakBuilderGui(MainFrame):
             icon_path = os.path.join(os.path.dirname(__file__), "resources", "icon.ico")
 
         return icon_path
+
+    def _get_cfg_path(self):
+        '''
+        Gets the PAK Builder's cfg file path
+
+        :return: Absolute path to the PAK Builder cfg file
+        :rtype: str
+        '''
+        cfg_path = os.path.dirname(__file__)
+
+        if "_MEI" in __file__: # (Packed)
+            cfg_path = os.path.dirname(os.path.dirname(cfg_path))
+        cfg_path = os.path.join(cfg_path, "paker.cfg")
+
+        return cfg_path
+
 
     def _set_config_property(self, key, value, save_now=True):
         '''
