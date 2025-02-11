@@ -95,17 +95,17 @@ class MainFrame ( wx.Frame ):
 
         bSizer12 = wx.BoxSizer( wx.HORIZONTAL )
 
-        self.cb_save_output_dir = wx.CheckBox( self.panel_options, wx.ID_ANY, _(u"Remember Output Path"), wx.DefaultPosition, wx.DefaultSize, 0 )
-        self.cb_save_output_dir.SetValue(True)
-        self.cb_save_output_dir.SetToolTip( _(u"Save/Remember the PAK Output Directory") )
-
-        bSizer12.Add( self.cb_save_output_dir, 0, wx.ALIGN_CENTER|wx.ALL, 5 )
-
         self.cb_save_filename = wx.CheckBox( self.panel_options, wx.ID_ANY, _(u"Remember Filename"), wx.DefaultPosition, wx.DefaultSize, 0 )
         self.cb_save_filename.SetValue(True)
         self.cb_save_filename.SetToolTip( _(u"Save/Remember the PAK Filename") )
 
         bSizer12.Add( self.cb_save_filename, 0, wx.ALL, 5 )
+
+        self.cb_save_output_dir = wx.CheckBox( self.panel_options, wx.ID_ANY, _(u"Remember Output Path"), wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.cb_save_output_dir.SetValue(True)
+        self.cb_save_output_dir.SetToolTip( _(u"Save/Remember the PAK Output Directory") )
+
+        bSizer12.Add( self.cb_save_output_dir, 0, wx.ALIGN_CENTER|wx.ALL, 5 )
 
         self.cb_save_target_dir = wx.CheckBox( self.panel_options, wx.ID_ANY, _(u"Remember Target Directory"), wx.DefaultPosition, wx.DefaultSize, 0 )
         self.cb_save_target_dir.SetValue(True)
