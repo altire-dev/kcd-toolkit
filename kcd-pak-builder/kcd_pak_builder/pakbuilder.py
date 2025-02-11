@@ -23,6 +23,7 @@ class PakBuilder(Thread):
         self._target_dir = target_dir
         self._file_list = []
         self._files_processed = []
+        self._ignore_nested_paks = False
         super(PakBuilder, self).__init__()
 
     def start_pak(self):
@@ -50,6 +51,8 @@ class PakBuilder(Thread):
         '''
         for root, dirs, files in os.walk(self._target_dir):
             for file in files:
+                if self._ignore_nested_paks and file.lower().endswith(".pak"):
+                    continue
                 file_path = os.path.join(root, file)
                 self._file_list.append(file_path)
 
@@ -82,3 +85,12 @@ class PakBuilder(Thread):
         :rtype: int
         '''
         return len(self._files_processed)
+
+    def set_skip_pak_files(self, ignore):
+        '''
+        Sets whether the Packer should ignore/skip nested PAK files
+
+        :param ignore: Whether to ignore/skip nested .pak files or not
+        :type ignore: bool
+        '''
+        self._ignore_nested_paks = ignore
