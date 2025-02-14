@@ -20,7 +20,7 @@ In this repository you'll find a collection of tools, utilities, scripts, and mo
     </tr>
     <tr>
       <td><a href="./kcd-mod-initialiser">KCD Mod Initialiser</a></td>
-      <td><a href="https://github.com/altire-dev/kcd-toolkit/releases/latest">0.0.1</a></td>
+      <td><a href="https://github.com/altire-dev/kcd-toolkit/releases/latest">0.0.1 (beta)</a></td>
       <td>Builds the file and folder structure for a new KCD2 mod, including the mod.manifest file</td>
     </tr>
   </tbody>
