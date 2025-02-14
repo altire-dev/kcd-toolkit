@@ -20,7 +20,7 @@ _ = gettext.gettext
 class MainFrame ( wx.Frame ):
 
     def __init__( self, parent ):
-        wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = _(u"KCD Mod Initialiser"), pos = wx.DefaultPosition, size = wx.Size( 600,700 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
+        wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = _(u"KCD Mod Generator"), pos = wx.DefaultPosition, size = wx.Size( 600,700 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
 
         self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
 
@@ -57,7 +57,7 @@ class MainFrame ( wx.Frame ):
         bSizer4111.Add( self.m_staticText1111, 3, wx.ALIGN_CENTER|wx.ALL, 5 )
 
         self.text_mod_author = wx.TextCtrl( sbSizer2.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-        self.text_mod_author.SetToolTip( _(u"The name of the Mod author") )
+        self.text_mod_author.SetToolTip( _(u"Mod Author Name") )
 
         bSizer4111.Add( self.text_mod_author, 7, wx.ALL, 5 )
 
@@ -153,10 +153,10 @@ class MainFrame ( wx.Frame ):
 
         bSizer11 = wx.BoxSizer( wx.HORIZONTAL )
 
-        self.btn_init_mod = wx.Button( self.m_panel3, wx.ID_ANY, _(u"Create Mod"), wx.DefaultPosition, wx.DefaultSize, 0 )
-        self.btn_init_mod.SetToolTip( _(u"Initialise and sets up the Mod") )
+        self.btn_generate_mod = wx.Button( self.m_panel3, wx.ID_ANY, _(u"Generate Mod"), wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.btn_generate_mod.SetToolTip( _(u"Initialise and sets up the Mod") )
 
-        bSizer11.Add( self.btn_init_mod, 1, wx.ALL|wx.EXPAND, 5 )
+        bSizer11.Add( self.btn_generate_mod, 1, wx.ALL|wx.EXPAND, 5 )
 
         self.btn_open_folder = wx.Button( self.m_panel3, wx.ID_ANY, _(u"Open Mod Folder"), wx.DefaultPosition, wx.DefaultSize, 0 )
         self.btn_open_folder.Enable( False )

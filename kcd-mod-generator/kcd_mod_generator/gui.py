@@ -14,11 +14,11 @@ from .manifest import ModManifest
 from . import utils
 
 # ===================================================================================================
-# KCD Mod Initialiser GUI Class
+# KCD Mod Generator GUI Class
 # ===================================================================================================
-class KCDModInitialiserGui(MainFrame):
+class KCDModGeneratorGui(MainFrame):
     '''
-    KCD Mod Initialiser GUI
+    KCD Mod Generator GUI
     '''
 
     # ===================================================================================================
@@ -44,7 +44,7 @@ class KCDModInitialiserGui(MainFrame):
         self._mod_folder_path = None
 
         # Initialise Frame
-        super(KCDModInitialiserGui, self).__init__(None)
+        super(KCDModGeneratorGui, self).__init__(None)
 
         # Load Configuration
         self._cfg_path = self._get_cfg_path()
@@ -60,14 +60,13 @@ class KCDModInitialiserGui(MainFrame):
         self._bind_events()
         self._init_ui()
 
-
     def _bind_events(self):
         '''
         Binds GUI Events
         '''
 
         # Button Events
-        self.Bind(wx.EVT_BUTTON, self._on_init_mod, self.btn_init_mod)
+        self.Bind(wx.EVT_BUTTON, self._on_generate_mod, self.btn_generate_mod)
         self.Bind(wx.EVT_BUTTON, self._on_open_mod_folder, self.btn_open_folder)
 
         # Change Events
@@ -76,9 +75,9 @@ class KCDModInitialiserGui(MainFrame):
 
     def _init_ui(self):
         '''
-        Updates and set ups the UI for Mod Initialser
+        Updates and set ups the UI
         '''
-        self.SetTitle("KCD Mod Initialser (v%s) by %s" % (self._version, self._author))
+        self.SetTitle("KCD Mod Generator (v%s) by %s" % (self._version, self._author))
 
         # Update Icon
         icon = wx.Icon()
@@ -91,13 +90,12 @@ class KCDModInitialiserGui(MainFrame):
         self.dp_kcd2_path.SetPath(self._cfg.get(self.CFG_KEY_KCD2_PATH, ""))
         self.text_mod_author.SetValue(self._cfg.get(self.CFG_KEY_AUTHOR_NAME, ""))
 
-
     # ===================================================================================================
     # Event Callbacks/Handlers
     # ===================================================================================================
-    def _on_init_mod(self, event):
+    def _on_generate_mod(self, event):
         '''
-        Initialse Mod Button Callback. Called when the Initialise Mod button is clicked
+        Generate Mod Button Callback. Called when the Generate Mod button is clicked
 
         :param event: The Button Event
         :type: wx.Event
@@ -173,7 +171,7 @@ class KCDModInitialiserGui(MainFrame):
         # ===================================================================================================
         self.pg_bar.SetValue(100)
         self._set_mod_folder_path(mod_path)
-        self.write_to_log("Mod set up complete! ")
+        self.write_to_log("Mod successfully generated!")
 
     def _on_kcd2_path_change(self, event):
         '''
@@ -276,14 +274,14 @@ class KCDModInitialiserGui(MainFrame):
         '''
         Gets the cfg file path
 
-        :return: Absolute path to the cfg file for Mod Initialser
+        :return: Absolute path to the cfg file
         :rtype: str
         '''
         cfg_path = os.path.dirname(__file__)
 
         if "_MEI" in __file__: # (Packed)
             cfg_path = os.path.dirname(os.path.dirname(cfg_path))
-        cfg_path = os.path.join(cfg_path, "modinitialiser.cfg")
+        cfg_path = os.path.join(cfg_path, "modgenerator.cfg")
 
         return cfg_path
 

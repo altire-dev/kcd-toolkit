@@ -1,32 +1,19 @@
 # ===================================================================================================
-# Imports: External
+# Imports: KCD Mod Generator
 # ===================================================================================================
-import wx
+from kcd_mod_generator import KCDModGenerator
 
 # ===================================================================================================
-# Imports: Internal
+# Properties
 # ===================================================================================================
-from .gui import KCDModInitialiserGui
+VERSION = "0.0.1"
+AUTHOR = "Altire"
 
 # ===================================================================================================
-# KCD Mod Initialser Class
+# Launch!
 # ===================================================================================================
-class KCDModInitialiser():
-    '''
-    KCD Mod Initialser. Main object for KCD Mod Initialser Package
-    '''
+if __name__ == "__main__":
+    mi = KCDModGenerator(VERSION, AUTHOR)
+    mi.launch()
 
-    def __init__(self, version, author):
-        '''
-        Constructor
-        '''
-        # Initialise the GUI
-        self._app = wx.App()
-        self._gui = KCDModInitialiserGui(version, author)
 
-    def launch(self):
-        '''
-        Launches the PAK Builder GUI
-        '''
-        self._gui.Show()
-        self._app.MainLoop()

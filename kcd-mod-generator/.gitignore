@@ -6,4 +6,4 @@ dist/
 *.spec
 
 # Config
-modinitialiser.cfg
+modgenerator.cfg
