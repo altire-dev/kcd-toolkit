@@ -191,7 +191,7 @@
                       <property name="border">5</property>
                       <property name="flag">wxEXPAND</property>
                       <property name="proportion">0</property>
-                      <object class="wxStaticBoxSizer" expanded="false">
+                      <object class="wxStaticBoxSizer" expanded="true">
                         <property name="id">wxID_ANY</property>
                         <property name="label">General</property>
                         <property name="minimum_size"></property>
@@ -199,20 +199,20 @@
                         <property name="orient">wxVERTICAL</property>
                         <property name="parent">1</property>
                         <property name="permission">none</property>
-                        <object class="sizeritem" expanded="false">
+                        <object class="sizeritem" expanded="true">
                           <property name="border">5</property>
                           <property name="flag">wxEXPAND</property>
                           <property name="proportion">1</property>
-                          <object class="wxBoxSizer" expanded="false">
+                          <object class="wxBoxSizer" expanded="true">
                             <property name="minimum_size"></property>
-                            <property name="name">bSizer28</property>
+                            <property name="name">bSizer13</property>
                             <property name="orient">wxHORIZONTAL</property>
                             <property name="permission">none</property>
-                            <object class="sizeritem" expanded="false">
+                            <object class="sizeritem" expanded="true">
                               <property name="border">5</property>
-                              <property name="flag">wxALIGN_CENTER|wxALL</property>
+                              <property name="flag">wxALL</property>
                               <property name="proportion">3</property>
-                              <object class="wxStaticText" expanded="false">
+                              <object class="wxStaticText" expanded="true">
                                 <property name="BottomDockable">1</property>
                                 <property name="LeftDockable">1</property>
                                 <property name="RightDockable">1</property>
@@ -241,7 +241,7 @@
                                 <property name="gripper">0</property>
                                 <property name="hidden">0</property>
                                 <property name="id">wxID_ANY</property>
-                                <property name="label">Game Path</property>
+                                <property name="label">KCD2 Path *</property>
                                 <property name="markup">0</property>
                                 <property name="max_size"></property>
                                 <property name="maximize_button">0</property>
@@ -250,7 +250,7 @@
                                 <property name="minimize_button">0</property>
                                 <property name="minimum_size"></property>
                                 <property name="moveable">1</property>
-                                <property name="name">m_staticText2</property>
+                                <property name="name">m_staticText11112</property>
                                 <property name="pane_border">1</property>
                                 <property name="pane_position"></property>
                                 <property name="pane_size"></property>
@@ -270,11 +270,11 @@
                                 <property name="wrap">-1</property>
                               </object>
                             </object>
-                            <object class="sizeritem" expanded="false">
+                            <object class="sizeritem" expanded="true">
                               <property name="border">5</property>
                               <property name="flag">wxALL</property>
                               <property name="proportion">7</property>
-                              <object class="wxDirPickerCtrl" expanded="false">
+                              <object class="wxDirPickerCtrl" expanded="true">
                                 <property name="BottomDockable">1</property>
                                 <property name="LeftDockable">1</property>
                                 <property name="RightDockable">1</property>
@@ -306,7 +306,7 @@
                                 <property name="max_size"></property>
                                 <property name="maximize_button">0</property>
                                 <property name="maximum_size"></property>
-                                <property name="message">Select KCD2 Folder</property>
+                                <property name="message">Select KCD2 Installation Folder</property>
                                 <property name="min_size"></property>
                                 <property name="minimize_button">0</property>
                                 <property name="minimum_size"></property>
@@ -324,7 +324,7 @@
                                 <property name="style">wxDIRP_DEFAULT_STYLE|wxDIRP_DIR_MUST_EXIST</property>
                                 <property name="subclass">; ; forward_declare</property>
                                 <property name="toolbar_pane">0</property>
-                                <property name="tooltip">The KCD2 game installation path</property>
+                                <property name="tooltip"></property>
                                 <property name="validator_data_type"></property>
                                 <property name="validator_style">wxFILTER_NONE</property>
                                 <property name="validator_type">wxDefaultValidator</property>

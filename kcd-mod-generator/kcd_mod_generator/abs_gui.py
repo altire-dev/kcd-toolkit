@@ -34,20 +34,18 @@ class MainFrame ( wx.Frame ):
 
         sbSizer2 = wx.StaticBoxSizer( wx.StaticBox( self.m_panel3, wx.ID_ANY, _(u"General") ), wx.VERTICAL )
 
-        bSizer28 = wx.BoxSizer( wx.HORIZONTAL )
+        bSizer13 = wx.BoxSizer( wx.HORIZONTAL )
 
-        self.m_staticText2 = wx.StaticText( sbSizer2.GetStaticBox(), wx.ID_ANY, _(u"Game Path"), wx.DefaultPosition, wx.DefaultSize, 0 )
-        self.m_staticText2.Wrap( -1 )
+        self.m_staticText11112 = wx.StaticText( sbSizer2.GetStaticBox(), wx.ID_ANY, _(u"KCD2 Path *"), wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.m_staticText11112.Wrap( -1 )
 
-        bSizer28.Add( self.m_staticText2, 3, wx.ALIGN_CENTER|wx.ALL, 5 )
+        bSizer13.Add( self.m_staticText11112, 3, wx.ALL, 5 )
 
-        self.dp_kcd2_path = wx.DirPickerCtrl( sbSizer2.GetStaticBox(), wx.ID_ANY, wx.EmptyString, _(u"Select KCD2 Folder"), wx.DefaultPosition, wx.DefaultSize, wx.DIRP_DEFAULT_STYLE|wx.DIRP_DIR_MUST_EXIST )
-        self.dp_kcd2_path.SetToolTip( _(u"The KCD2 game installation path") )
-
-        bSizer28.Add( self.dp_kcd2_path, 7, wx.ALL, 5 )
+        self.dp_kcd2_path = wx.DirPickerCtrl( sbSizer2.GetStaticBox(), wx.ID_ANY, wx.EmptyString, _(u"Select KCD2 Installation Folder"), wx.DefaultPosition, wx.DefaultSize, wx.DIRP_DEFAULT_STYLE|wx.DIRP_DIR_MUST_EXIST )
+        bSizer13.Add( self.dp_kcd2_path, 7, wx.ALL, 5 )
 
 
-        sbSizer2.Add( bSizer28, 1, wx.EXPAND, 5 )
+        sbSizer2.Add( bSizer13, 1, wx.EXPAND, 5 )
 
         bSizer4111 = wx.BoxSizer( wx.HORIZONTAL )
 
