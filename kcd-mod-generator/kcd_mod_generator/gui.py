@@ -87,7 +87,7 @@ class KCDModGeneratorGui(MainFrame):
         # ===================================================================================================
         # Process Configuration
         # ===================================================================================================
-        self.dp_kcd2_path.SetPath(self._cfg.get(self.CFG_KEY_KCD2_PATH, ""))
+        self.dp_kcd2_path.SetPath(str(self._cfg.get(self.CFG_KEY_KCD2_PATH, "")))
         self.text_mod_author.SetValue(self._cfg.get(self.CFG_KEY_AUTHOR_NAME, ""))
 
     # ===================================================================================================
