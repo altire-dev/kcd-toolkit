@@ -50,3 +50,6 @@ Have you created something that you think might save other modders time, or that
 <h2>Community</h2>
 <a href="https://discord.gg/RuKE5uhz">Discord - KCD Modding Community</a>
 
+<h2>Documentation</h2>
+<a href="https://modding.wiki/en/kingdomcomedeliverance2">KCD2 Modding Wiki</a>
+
