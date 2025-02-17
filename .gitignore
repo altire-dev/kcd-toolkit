@@ -6,3 +6,6 @@
 
 # Archives
 *.pak
+
+# Test FIles
+test_playgound/
