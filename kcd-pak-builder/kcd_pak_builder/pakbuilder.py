@@ -10,7 +10,14 @@ class PakBuilder(Thread):
     Paker Thread
     '''
 
-    def __init__(self, gui, pak_path, target_dir):
+    # ===================================================================================================
+    # Properties
+    # ===================================================================================================
+
+    # ===================================================================================================
+    # Methods
+    # ===================================================================================================
+    def __init__(self, gui, pak_path, target_dir, max_size_mb):
         '''
         constructor
 
@@ -22,6 +29,7 @@ class PakBuilder(Thread):
         self._pak_path = pak_path
         self._target_dir = target_dir
         self._file_list = []
+        self._max_size_bytes = int(int(max_size_mb) * 1024 * 1024)
         self._files_processed = []
         self._ignore_nested_paks = False
         super(PakBuilder, self).__init__()
@@ -33,17 +41,86 @@ class PakBuilder(Thread):
         self._stop_event.set()
 
     def run(self):
+        '''
+        PAK Builder Thread Runner
+        :return:
+        '''
+        file_idx = 0
+        pak_part_no = 0
+        total_files = len(self._file_list)
 
-        with zipfile.ZipFile(self._pak_path, 'w', zipfile.ZIP_DEFLATED) as pak_file:
-            for file in self._file_list:
-                if self._stop_event.is_set():
-                    break
+        # ===================================================================================================
+        # Main PAK Builder Loop
+        # ===================================================================================================
+        while file_idx < total_files and not self._stop_event.is_set():
+            # Build PAK Path
+            pak_path = self._pak_path
+            if pak_part_no > 0:
+                pak_path = self._pak_path.replace(".pak", "-part%s.pak" % pak_part_no)
 
-                pak_file.write(file, os.path.relpath(file, self._target_dir))
-                self._files_processed.append(file)
-                self._gui.on_file_processed(file)
+            # Write to PAK
+            with zipfile.ZipFile(pak_path, 'w', zipfile.ZIP_DEFLATED) as pak_file:
+                pak_size = 0
+
+                for file in self._file_list[file_idx:]:
+                    pak_size += os.path.getsize(file)
+                    if self._stop_event.is_set():
+                        break
+
+                    pak_file.write(file, os.path.relpath(file, self._target_dir))
+                    self._files_processed.append(file)
+                    self._gui.on_file_processed(file)
+                    file_idx += 1
+
+                    # Check if size limit reached
+                    if pak_size > self._max_size_bytes:
+                        break
+
+            # If breaking because of size, move file and start pak counter
+            if pak_size > self._max_size_bytes:
+                if pak_part_no == 0:
+                    os.replace(pak_path, pak_path.replace(".pak", "-part%s.pak" % pak_part_no))
+                pak_part_no += 1
 
         self._gui.on_completion()
+
+    # ===================================================================================================
+    # Alternate Run: Checks file size Constantly. More accurate, but slower to run by a fair amount
+    # ===================================================================================================
+    # def run(self):
+    #     '''
+    #     PAK Builder Thread Runner
+    #     :return:
+    #     '''
+    #     file_idx = 0
+    #     pak_part_no = 0
+    #     total_files = len(self._file_list)
+    #     print("Max size: %s" % self._max_size_bytes)
+    #
+    #     # ===================================================================================================
+    #     # Main PAK Builder Loop
+    #     # ===================================================================================================
+    #     while file_idx < total_files and not self._stop_event.is_set():
+    #         # Build PAK Path
+    #         pak_path = self._pak_path
+    #         if pak_part_no > 0:
+    #             pak_path = self._pak_path.replace(".pak", "-part%s.pak" % pak_part_no)
+    #
+    #         for file in self._file_list[file_idx:]:
+    #             if self._stop_event.is_set():
+    #                 break
+    #
+    #             if os.path.isfile(pak_path):
+    #                 if os.path.getsize(pak_path) + os.path.getsize(file) >= self._max_size_bytes:
+    #                     pak_part_no += 1
+    #
+    #             with zipfile.ZipFile(pak_path, 'a', zipfile.ZIP_DEFLATED) as pak_file:
+    #                 pak_file.write(file, os.path.relpath(file, self._target_dir))
+    #                 self._files_processed.append(file)
+    #                 self._gui.on_file_processed(file)
+    #                 file_idx += 1
+    #
+    #     self._gui.on_completion()
 
     def build_filelist(self):
         '''

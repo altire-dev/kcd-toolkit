@@ -29,6 +29,7 @@ class KCDPakBuilderGui(MainFrame):
     CFG_KEY_TARGET_DIR          = "target_dir"
     CFG_KEY_IGNORE_NESTED_PAKS  = "ignore_nested_paks"
     CFG_KEY_SHOW_OPTIONS        = "show_options"
+    CFG_KEY_MAX_PAK_MB          = "max_pak_mb"
 
     # ===================================================================================================
     # Methods
@@ -74,6 +75,7 @@ class KCDPakBuilderGui(MainFrame):
         self.Bind(wx.EVT_DIRPICKER_CHANGED, self._on_output_dir_change, self.dp_pak_out_dir)
         self.Bind(wx.EVT_TEXT, self._on_pak_filename_change, self.text_pak_filename)
         self.Bind(wx.EVT_DIRPICKER_CHANGED, self._on_target_dir_change, self.dp_target_dir)
+        self.Bind(wx.EVT_TEXT, self._on_pak_max_mb_change, self.text_pak_max_mb)
 
     def _init_ui(self):
         '''
@@ -111,6 +113,9 @@ class KCDPakBuilderGui(MainFrame):
         self._ignore_nested_paks = self._cfg.get(self.CFG_KEY_IGNORE_NESTED_PAKS, True)
         self.cb_ignore_nested_paks.SetValue(self._ignore_nested_paks)
 
+        # Max PAK Size
+        self.text_pak_max_mb.SetValue(str(self._cfg.get(self.CFG_KEY_MAX_PAK_MB, 1900)))
+
         # Config: Show/Hide Options
         if self._cfg.get(self.CFG_KEY_SHOW_OPTIONS):
             self._show_options()
@@ -130,6 +135,7 @@ class KCDPakBuilderGui(MainFrame):
         pak_out_dir = self.dp_pak_out_dir.GetPath()
         pak_out_filename = self.text_pak_filename.GetValue()
         target_dir = self.dp_target_dir.GetPath()
+        max_size_mb = self.text_pak_max_mb.GetValue()
 
         # ===================================================================================================
         # Validate Input
@@ -153,6 +159,15 @@ class KCDPakBuilderGui(MainFrame):
             self.write_to_log("ERROR: Target directory is invalid or does not exist")
             return
 
+        # Validate Max MB
+        try:
+            max_size_mb = int(max_size_mb)
+            if max_size_mb < 10 or max_size_mb > 51250:
+                raise ValueError("Out of acceptable range")
+        except ValueError as ex:
+            self.write_to_log("Error: Maximum PAK size is invalid. Must be a number between 10 (10MB) and 51250 (50GB)")
+            return
+
         # ===================================================================================================
         # Update UI
         # ===================================================================================================
@@ -163,7 +178,7 @@ class KCDPakBuilderGui(MainFrame):
         # ===================================================================================================
         # Initialise PAK Builder
         # ===================================================================================================
-        self._paker = PakBuilder(self, pak_path, target_dir)
+        self._paker = PakBuilder(self, pak_path, target_dir, max_size_mb)
         self._paker.set_skip_pak_files(self.cb_ignore_nested_paks.GetValue())
         self._paker.build_filelist()
         self.pak_pg_bar.SetRange(self._paker.get_total_file_count())
@@ -214,6 +229,20 @@ class KCDPakBuilderGui(MainFrame):
             target_dir = self.dp_target_dir.GetPath()
             # print("Saving Target DIR: %s" % target_dir)
             self._set_config_property(self.CFG_KEY_TARGET_DIR, target_dir)
+
+
+    def _on_pak_max_mb_change(self, event):
+        '''
+        Called when the PAK Max size input changes
+
+        :param event:
+        :return:
+        '''
+        try:
+            max_size = int(self.text_pak_max_mb.GetValue())
+            self._set_config_property(self.CFG_KEY_MAX_PAK_MB, max_size)
+        except ValueError:
+            pass
 
     def _on_pak_filename_change(self, event):
         '''

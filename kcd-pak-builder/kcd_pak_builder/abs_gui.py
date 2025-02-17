@@ -127,6 +127,21 @@ class MainFrame ( wx.Frame ):
 
         bSizer16.Add( bSizer13, 0, wx.EXPAND, 5 )
 
+        bSizer131 = wx.BoxSizer( wx.HORIZONTAL )
+
+        self.text_pak_mak_mb = wx.StaticText( self.panel_options, wx.ID_ANY, _(u"Max PAK Content Size (MB)"), wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.text_pak_mak_mb.Wrap( -1 )
+
+        bSizer131.Add( self.text_pak_mak_mb, 3, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
+
+        self.text_pak_max_mb = wx.TextCtrl( self.panel_options, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.text_pak_max_mb.SetToolTip( _(u"The Maximum MB content that a PAK size should contain, before splitting into a separate part") )
+
+        bSizer131.Add( self.text_pak_max_mb, 7, wx.ALL, 5 )
+
+
+        bSizer16.Add( bSizer131, 1, wx.EXPAND, 5 )
+
 
         self.panel_options.SetSizer( bSizer16 )
         self.panel_options.Layout()
