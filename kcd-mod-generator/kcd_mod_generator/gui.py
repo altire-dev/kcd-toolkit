@@ -121,7 +121,7 @@ class KCDModGeneratorGui(MainFrame):
             self.write_to_log("Error: KCD2 Installation path is invalid or does not exist", True)
             return
         if not self._is_valid_id(id):
-            self.write_to_log("Error: Mod ID must be set, and should only contain letters, numbers, underscores and hyphens.")
+            self.write_to_log("Error: Mod ID must be set, and should only contain lowercase letters and underscores.")
             return
         if not name:
             self.write_to_log("Error: Mod Name must be set")
@@ -352,7 +352,7 @@ class KCDModGeneratorGui(MainFrame):
         :return: True if the ID is valid, otherwise False
         :rtype: bool
         '''
-        regex = re.compile("^[a-zA-Z0-9_-]+$")
+        regex = re.compile("^[a-z_]+$")
         if regex.match(id):
             return True
         return False
