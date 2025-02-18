@@ -161,6 +161,11 @@ class KCDModGeneratorGui(MainFrame):
         os.mkdir(localization_path)
 
         # ===================================================================================================
+        # Apply EULA
+        # ===================================================================================================
+        self._copy_eula(mod_path)
+
+        # ===================================================================================================
         # Write Manifest
         # ===================================================================================================
         manifest = ModManifest(id, name,author, version, kcd2_version, desc)
@@ -285,6 +290,23 @@ class KCDModGeneratorGui(MainFrame):
 
         return cfg_path
 
+    def _get_eula_path(self):
+        '''
+        Gets the path to the modding EULA
+
+        :return: The absolute path to the modding EULA
+        :rtype: str
+        '''
+
+        if "_MEI" in __file__: # (Packed)
+            eula_path = os.path.join(
+                os.path.dirname(os.path.dirname(__file__)), "resources", "modding_eula.txt"
+            )
+        else: # (Not Packed)
+            eula_path = os.path.join(os.path.dirname(__file__), "resources", "modding_eula.txt")
+
+        return eula_path
+
     def _set_config_property(self, key, value, save_now=True):
         '''
         Sets and saves a configuration property
@@ -299,6 +321,24 @@ class KCDModGeneratorGui(MainFrame):
         self._cfg[key] = value
         if save_now:
             self._save_cfg()
+
+    def _copy_eula(self, target_dir):
+        '''
+        Copies and applies the modding EULA to the specified directory
+
+        :param target_dir: Path to the directory to apply the modding EULA
+        :type target_dir: str
+        '''
+        # Read EULA contents
+        eula_src_path = self._get_eula_path()
+        print("Path is: %s" % eula_src_path)
+        with open(eula_src_path, "rb") as eula_src:
+            eula_contents = eula_src.read()
+
+        # Write Mod EULA
+        target_path = os.path.join(target_dir, "modding_eula.txt")
+        with open(target_path, "wb") as eula_file:
+            eula_file.write(eula_contents)
 
     # ===================================================================================================
     # Validators
