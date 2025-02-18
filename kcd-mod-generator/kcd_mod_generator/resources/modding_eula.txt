@@ -1,0 +1,101 @@
+Kingdom Come: Deliverance End User License Agreement
+
+This licensed application was developed by or on behalf of and is the property of Warhorse Studios s.r.o. (“Warhorse”).
+
+By installing and/or using this application, you agree to the following terms and conditions:
+
+1. INSTALLATION AND USE RIGHTS
+
+1.1 You acknowledge that this software End User License Agreement (“EULA”) is a binding agreement between you and Warhorse. Warhorse is solely responsible for the Kingdom Come: Deliverance software application (“Software”) and the content thereof.
+
+1.2 For as long as you comply with the terms of this EULA, Warhorse, grants you a personal, non-exclusive, non-transferrable limited right and license to install, store, and use one copy of the Software, including future patches or updates, on a single device, ONLY for your personal use and enjoyment. The Software is not being given, sold, or otherwise transferred to you nor does this EULA transfer to you any promotional use rights in the Software.
+
+1.3 The Software and your downloaded copy (including but not limited to all documentation, titles, computer software code, themes, objects, characters, character and asset names, dialogue, stories, artwork, concepts, sounds, and musical compositions) are owned by Warhorse and are protected by United States copyright law, international copyright treaties, and other laws. The Software contains licensed materials, including materials which have third party software credits attached to this EULA. You may not:
+
+(a) use or exploit the Software (or anything contained therein, including, without limitation, code, themes, objects, characters, artwork, sounds, etc.) in any way that results in direct or indirect compensation or commercial gain in any form, personal or otherwise, to you or any other party;
+
+(b) transfer the Software to more than one device or this EULA to any third party;
+
+(c) remove or modify any product identification or trademark, copyright, or proprietary notices, legends, symbols, or labels from the Software, or use any Warhorse trademarks, logos, trade names, or service marks in any manner except in connection with your licensed use of the Software under this EULA;
+
+(d) infringe or violate any intellectual property or proprietary rights, or rights of privacy or publicity, of Warhorse or any third party;
+
+(e) modify this EULA; or
+
+(f) copy, modify, adapt, translate, distribute, or create derivative works, decompile, disassemble, or reverse engineer the Software, in whole or in part, attempt to, or encourage or assist any other person to, circumvent or modify any security technology or software that is part of the Software, or do anything with the Software other than play the game on your device.
+
+1.4 You can terminate this license by deleting the Software from your computer. In the event you violate the terms of this EULA in any manner we reserve the right to immediately either (i) suspend the validity of the license rights granted to you under 1.2. or (ii) terminate this EULA with immediate effect. In both situations envisaged by previous sentence you agree, forthwith upon receipt of the notice on suspension or termination, to delete the Software from your computer and abstain using the Software or facilitating using the Software by a third person.
+
+1.5 TO THE FULLEST EXTENT PERMISSIBLE BY APPLICABLE LAW, THE SOFTWARE IS PROVIDED “AS IS” WITHOUT WARRANTY AND “WITH ALL FAULTS” AND THE ENTIRE RISK ASSOCIATED WITH YOUR DOWNLOADING AND USE OF THE SOFTWARE IS YOURS. WARHORSE AND ITS THIRD PARTY SOFTWARE SUPPLIERS (SUPPLIERS) DISCLAIM ANY AND ALL WARRANTIES, CONDITIONS, OR REPRESENTATIONS (EXPRESS, IMPLIED, ORAL OR WRITTEN), WITH RESPECT TO THE SOFTWARE, INCLUDING, BUT NOT LIMITED TO THOSE OF TITLE, OF NON-INFRINGEMENT, OF MERCHANTABILITY, OF FITNESS OR SUITABILITY FOR ANY PURPOSE (WHETHER OR NOT WARHORSE KNOWS, HAS REASON TO KNOW, HAS BEEN ADVISED, OR IS OTHERWISE IN FACT AWARE OF ANY SUCH PURPOSE), OF ACCURACY OR COMPLETENESS OF RESPONSES, OF RESULTS, OF REASONABLE CARE OR WORKMANLIKE EFFORT, OF LACK OF NEGLIGENCE, AND/OR OF A LACK OF VIRUSES, WHETHER ALLEGED TO ARISE BY LAW, BY REASON OF CUSTOM OR USAGE IN THE TRADE, OR BY COURSE OF DEALING.
+
+1.6 IN NO EVENT SHALL WARHORSE OR WARHORSE’S AFFILIATES AND THEIR SUPPLIERS, OFFICERS, DIRECTORS, EMPLOYEES, OR AGENTS BE LIABLE FOR LOSS OF PROFITS, OR ANY SPECIAL, PUNITIVE, INCIDENTAL, INDIRECT OR CONSEQUENTIAL DAMAGES ARISING OUT OF, RELATING TO OR IN CONNECTION WITH THIS EULA, THE SOFTWARE, THE USE OF (OR INABILITY TO USE) THE SOFTWARE, AND/OR ERRORS OR BUGS WITHIN THE SOFTWARE, WHETHER UNDER THEORY OF CONTRACT, TORT (INCLUDING NEGLIGENCE), INDEMNITY, PRODUCT LIABILITY OR OTHERWISE. IN NO EVENT SHALL WARHORSE’S LIABILITY ARISING UNDER, RELATING TO OR IN CONNECTION WITH THIS EULA, INCLUDING WITHOUT LIMITATION ANY LIABILITY FOR DIRECT OR INDIRECT DAMAGES, LOSSES, OR INJURIES, AND ANY LIABILITY, EXCEED THE PRICE YOU PAID FOR THE SOFTWARE. THE LIMITATIONS OF LIABILITY SET FORTH IN THIS SECTION SHALL APPLY TO THE FULLEST EXTENT PERMISSIBLE BY APPLICABLE LAW.
+
+1.7 You agree that you will comply with any applicable third-party terms of agreement when using the Software (e.g., you must not be in violation of your internet service agreement with using the Software).
+
+1.8 You agree to indemnify, defend, and hold Warhorse, its partners, affiliates, suppliers, contractors, officers, directors, employees, and agents harmless from and against any and all damages, losses, and expenses arising directly or indirectly from: (i) your acts and omissions to act in using the Software pursuant to the terms of the EULA; or (ii) your breach of this EULA.
+
+2. GENERAL PROVISIONS.
+
+2.1 Warhorse reserves the right to modify the terms and conditions in this EULA at any time by posting the updated EULA on Warhorse’s website. You will be deemed to have accepted such changes by continuing to use the Software. The Software may not be assigned or sublicensed by you in whole or in part (by contract, operation of law, or otherwise). If applicable laws allow you to transfer the Software, this EULA shall apply to and be binding upon your successors. The original of this EULA has been written in English. You waive any right you may have or claim under the law of any country to have this EULA written in a language other than English. If any provision of this EULA is unenforceable or invalid, that provision will be limited or eliminated to the minimum extent necessary so that this EULA will otherwise remain in full force and effect and enforceable. The EULA shall be deemed to have been made and executed in the Czech Republic, and any dispute arising hereunder shall be resolved in accordance with the Czech law. You hereby agree that if the terms of this EULA are not specifically observed, Warhorse will be irreparably damaged, and therefore you agree that Warhorse shall be entitled, without bond, other security or proof of damages, to appropriate equitable remedies with respect to your breach of any of the terms of this EULA, in addition to any other available remedies. This EULA represents the complete agreement concerning this license between the parties and supersedes all prior agreements and representations between them.
+
+2.2 Questions, complaints, or claims with respect to the Software should be directed to Warhorse at: https://forums.KingdomComeRPG.com/.
+
+3. THIRD PARTY COPYRIGHT NOTICES
+
+3.1 Portions of this software are included under license © 2004-2014 Crytek GmbH. All rights reserved.
+
+3.2 This software product includes Autodesk® Scaleform® software, © 2011 Autodesk, Inc. All rights reserved.
+
+3.3 Open Source Licenses
+
+(a) Uses Recast & Detour, Copyright (c) 2009 Mikko Mononen memon@inside.org
+
+(b) Uses parts of Chromium, Copyright (c) 2012 The Chromium Authors. All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+* Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+
+* Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+
+* Neither the name of Google Inc. nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+(c) Uses parts of FreeBSD, Copyright (c) 2005 Pascal Gloor pascal.gloor@spale.com
+
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+
+3. The name of the author may not be used to endorse or promote products derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+(d) Uses parts of OSSIM, Copyright (c) 2015
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "OSSIM Software"), to deal in the OSSIM Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the OSSIM Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the OSSIM Software.
+
+THE OSSIM SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE OSSIM SOFTWARE.
+
+4. MODDING TERMS
+
+4.1 Warhorse enables users of the Software to enhance their experience from using the Software through the creation of modifications (including but not limited to new items in the Software such as weapons, apparels and appearance of the characters) for use with the Software (such modifications are hereinafter called “Mod” or “Mods”). In order to protect Warhorse, the Software and any third-party licensors that have licensed intellectual property to Warhorse for use in the Software, and users that create or use Mods, the following terms under this article “Modding Terms” shall apply (hereinafter such terms shall be hereinafter referred to as “Modding Terms”).  The Modding Terms are inherent part of EULA and shall be without any prejudice to the other provisions of EULA, which in case of any conflict shall prevail over the Modding Terms.
+
+4.2 You acknowledge that you are not under age of fifteen. In the event that you are under such an age, you may not create any Mods, unless your parent or legal guardian has reviewed and agreed to these terms. The license we provide to you to create and use Mods with the Product may be revoked if you breach the Modding Terms.
+
+4.3 You acknowledge that you shall have no ownership or other proprietary interest in the Software  as a result of you creating the Mods. You also acknowledge that you shall have no rights or proprietary interest in  any Mods which you create, unless and only that are expressly stated herein.
+
+Any Mods that you create shall belong to you only insofar as the Mod contains your original creative work. You acknowledge and agree that all right, title and interest in any elements of the Mod which represent, comprise, derive or are based upon any intellectual property rights which subsist in the Software (including but not limited to any computer code, themes, objects, characters, character names, stories, dialogs, catch phrases, locations, concepts, artwork, images, animation, sounds, musical compositions, audio-visual effects or text), including without limitation copyrights, trademarks and other intellectual properties therein and/or related thereto, whether or not registered or registrable, are owned by, or for the benefit of Warhorse and its licensors.
+
+4.4 Subject to your compliance with the terms and conditions of the EULA and in particular the Modding Terms, Warhorse hereby grants you a non-exclusive, non-transferable, limited, fully revocable right and license to install, access and use the in-game modding tools and any other related tools provided by Warhorse (“Modding Tools”) solely and exclusively to create Mods for use with the Software  and to publish those Mods to the following web page: https://wiki.nexusmods.com/index.php/Kingdom_Come_Deliverance (“Modding Page”) or to share with other existing authorized users of the Software for non-commercial gain in the manner approved from time to time by Warhorse. You acknowledge and agree that your use of the Modding Page is at your own discretion and risk and that you will be solely responsible for any obligations, damages or losses which arise from your registration, access and use of this service.
+
+4.5 You agree to use the Modding Tools to create Mods in a manner that is consistent with this EULA, including an agreement that you shall not sell, rent, lease, license, distribute or otherwise transfer or exploit the Modding Tools and/or Mods or any copies thereof, for commercial gain or otherwise, except as permitted by this EULA, which means that you may only publish the Mod to the Modding Page or to share with other existing authorized users of the Software for non-commercial gain in the manner approved from time to time by Warhorse. A breach of the provisions of this license shall constitute a material breach which has the effect of terminating the EULA (including the Modding Terms) and which may subject you to civil and criminal liability.
+
+4.6 Any element which you include in your Mod must be your own original work created by you or you must have obtained the necessary permissions to use such materials. You are responsible for the content of any Mods which you create and publish on the Modding Page and shall warrant and represent to Warhorse your Mods do not contain: 1. any materials which are discriminatory, racist, obscene, libelous, offensive, illegal, defamatory, inappropriate, invasive, or likely to adversely affect the reputation or goodwill of Warhorse and/or its licensors; 2. any resemblance to any recognizable third party brand, character or personality, including but not limited to any trademark, logos or third party assets except for those assets provided to you by Warhorse as necessary for the creation of the Mod for use with the Product; 3. any third party assets, from other games published by Warhorse and its affiliates or any other third party; 4. any materials which do not comply with any additional instructions provided to you by Warhorse, which may be updated by Warhorse from time to time, as published on its web page or the Modding Page; 5. any malicious code, including viruses, spyware, Trojan horses, worms, time bombs, cancelbots, corrupted data, or other content that contains malicious code or in any way damages or interfere with the operation of the Software. Warhorse shall not pre-vet or monitor any Mods which are uploaded to the Modding Page or are shared with other users and does not monitor, endorse or approve any Mods. You are solely responsible for your Mod and may be held liable for any Mod which you create and upload to the Modding Page or share with other users of the Software. Warhorse reserves the right, in its sole and final discretion, to request removal of any Mods from the Modding Page which violate the content restrictions above or request any person to remove any Mods from the Software used by such a person. To the maximum extent permitted by applicable law, Warhorse does not assume any responsibility or liability for the Mods or for removal of, Mods or any failure to or delay in removing, such Mods.
+
+4.7 Any Mod that you distribute or publish either as described in article 4.4 or in any other manner has to include the copy of this EULA and the recipient of this Mod must agree to bound by the terms of this EULA.
