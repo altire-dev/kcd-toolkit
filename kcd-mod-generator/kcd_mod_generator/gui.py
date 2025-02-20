@@ -28,9 +28,13 @@ class KCDModGeneratorGui(MainFrame):
     CFG_KEY_AUTHOR_NAME = "author"
 
     # ===================================================================================================
+    # Class Functions
+
+    # ===================================================================================================
+    # ===================================================================================================
     # Methods
     # ===================================================================================================
-    def __init__(self, version, author):
+    def __init__(self, version, author, suite=None):
         '''
         Constructor
 
@@ -38,13 +42,15 @@ class KCDModGeneratorGui(MainFrame):
         :type version: str
         :param author: The app author
         :type author: str
+        :param suite: Optional reference to parent Mod Suite application. To be passed if running as part of KCD Mod Suite
+        :type suite: KCDModSuite
         '''
         self._version = version
         self._author = author
         self._mod_folder_path = None
 
         # Initialise Frame
-        super(KCDModGeneratorGui, self).__init__(None)
+        super(KCDModGeneratorGui, self).__init__(suite)
 
         # Load Configuration
         self._cfg_path = self._get_cfg_path()
@@ -64,14 +70,19 @@ class KCDModGeneratorGui(MainFrame):
         '''
         Binds GUI Events
         '''
+        bind_target = self
+        if self.GetParent():
+            bind_target = self.GetParent()
 
         # Button Events
-        self.Bind(wx.EVT_BUTTON, self._on_generate_mod, self.btn_generate_mod)
-        self.Bind(wx.EVT_BUTTON, self._on_open_mod_folder, self.btn_open_folder)
+        bind_target.Bind(wx.EVT_BUTTON, self.on_generate_mod, self.btn_generate_mod)
+        bind_target.Bind(wx.EVT_BUTTON, self._on_open_mod_folder, self.btn_open_folder)
 
         # Change Events
-        self.Bind(wx.EVT_DIRPICKER_CHANGED, self._on_kcd2_path_change, self.dp_kcd2_path)
-        self.Bind(wx.EVT_TEXT, self._on_author_change, self.text_mod_author)
+        bind_target.Bind(wx.EVT_DIRPICKER_CHANGED, self._on_kcd2_path_change, self.dp_kcd2_path)
+        bind_target.Bind(wx.EVT_TEXT, self._on_author_change, self.text_mod_author)
+
+        print("Events bound")
 
     def _init_ui(self):
         '''
@@ -80,9 +91,10 @@ class KCDModGeneratorGui(MainFrame):
         self.SetTitle("KCD Mod Generator (v%s) by %s" % (self._version, self._author))
 
         # Update Icon
-        icon = wx.Icon()
-        icon.CopyFromBitmap(wx.Bitmap(self._get_icon_path()))
-        self.SetIcon(icon)
+        if not self.GetParent():
+            icon = wx.Icon()
+            icon.CopyFromBitmap(wx.Bitmap(self._get_icon_path()))
+            self.SetIcon(icon)
 
         # ===================================================================================================
         # Process Configuration
@@ -93,13 +105,14 @@ class KCDModGeneratorGui(MainFrame):
     # ===================================================================================================
     # Event Callbacks/Handlers
     # ===================================================================================================
-    def _on_generate_mod(self, event):
+    def on_generate_mod(self, event):
         '''
         Generate Mod Button Callback. Called when the Generate Mod button is clicked
 
         :param event: The Button Event
         :type: wx.Event
         '''
+        print("Clicky!")
         self.text_output_log.Clear()
         self.pg_bar.SetValue(0)
 

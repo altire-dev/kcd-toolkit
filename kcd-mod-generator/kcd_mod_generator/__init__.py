@@ -9,20 +9,30 @@ import wx
 from .gui import KCDModGeneratorGui
 
 # ===================================================================================================
+# Properties
+# ===================================================================================================
+VERSION = "1.1.1"
+AUTHOR = "Altire"
+
+
+# ===================================================================================================
 # KCD Mod Generator Class
 # ===================================================================================================
-class KCDModGenerator():
+class KCDModGenerator:
     '''
     KCD Mod Generator. Main object for KCD Mod Generator Package
     '''
 
-    def __init__(self, version, author):
+    # ===================================================================================================
+    # Methods
+    # ===================================================================================================
+    def __init__(self):
         '''
         Constructor
         '''
         # Initialise the GUI
         self._app = wx.App()
-        self._gui = KCDModGeneratorGui(version, author)
+        self._gui = KCDModGeneratorGui(VERSION, AUTHOR)
 
     def launch(self):
         '''
