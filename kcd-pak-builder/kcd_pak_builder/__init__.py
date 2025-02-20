@@ -9,6 +9,13 @@ import wx
 from .gui import KCDPakBuilderGui
 
 # ===================================================================================================
+# Properties
+# ===================================================================================================
+VERSION = "1.1.0"
+AUTHOR  = "Altire"
+
+
+# ===================================================================================================
 # KCD PAK Builder Class
 # ===================================================================================================
 class KCDPakBuilder():
@@ -16,13 +23,13 @@ class KCDPakBuilder():
     KCD PAK Builder. Main object for KCD PAK Builder Package
     '''
 
-    def __init__(self, version, author):
+    def __init__(self):
         '''
         Constructor
         '''
         # Initialise the GUI
         self._app = wx.App()
-        self._gui = KCDPakBuilderGui(version, author)
+        self._gui = KCDPakBuilderGui(VERSION, AUTHOR)
 
     def launch(self):
         '''

@@ -26,10 +26,10 @@ class MainFrame ( wx.Frame ):
 
         bSizer3 = wx.BoxSizer( wx.VERTICAL )
 
-        self.m_panel2 = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+        self.MainPanel = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
         bSizer61 = wx.BoxSizer( wx.VERTICAL )
 
-        self.m_panel3 = wx.Panel( self.m_panel2, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+        self.m_panel3 = wx.Panel( self.MainPanel, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
         bSizer8 = wx.BoxSizer( wx.VERTICAL )
 
         bSizer41 = wx.BoxSizer( wx.HORIZONTAL )
@@ -196,10 +196,10 @@ class MainFrame ( wx.Frame ):
         bSizer61.Add( self.m_panel3, 1, wx.EXPAND |wx.ALL, 5 )
 
 
-        self.m_panel2.SetSizer( bSizer61 )
-        self.m_panel2.Layout()
-        bSizer61.Fit( self.m_panel2 )
-        bSizer3.Add( self.m_panel2, 1, wx.EXPAND |wx.ALL, 0 )
+        self.MainPanel.SetSizer( bSizer61 )
+        self.MainPanel.Layout()
+        bSizer61.Fit( self.MainPanel )
+        bSizer3.Add( self.MainPanel, 1, wx.EXPAND |wx.ALL, 0 )
 
 
         self.SetSizer( bSizer3 )

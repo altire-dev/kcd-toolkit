@@ -35,9 +35,16 @@ class KCDPakBuilderGui(MainFrame):
     # Methods
     # ===================================================================================================
 
-    def __init__(self, version, author):
+    def __init__(self, version, author, suite=None):
         '''
         Constructor
+
+        :param version: The app version
+        :type version: str
+        :param author: The app author
+        :type author: str
+        :param suite: Optional reference to parent Mod Suite application. To be passed if running as part of KCD Mod Suite
+        :type suite: KCDModSuite
         '''
         self._version = version
         self._author = author
@@ -49,7 +56,7 @@ class KCDPakBuilderGui(MainFrame):
         self._options_visible = self._cfg.get(self.CFG_KEY_SHOW_OPTIONS, True)
 
         # Initialise Frame
-        super(KCDPakBuilderGui, self).__init__(None)
+        super(KCDPakBuilderGui, self).__init__(suite)
 
         # Set Up GUI
         self._bind_events()
@@ -60,22 +67,26 @@ class KCDPakBuilderGui(MainFrame):
         '''
         Binds Gui Events
         '''
+        bind_target = self
+        if self.GetParent():
+            bind_target = self.GetParent()
+
         # Button Events
-        self.Bind(wx.EVT_BUTTON, self._on_start_pak, self.btn_start_pak)
-        self.Bind(wx.EVT_BUTTON, self._on_stop_pak, self.btn_stop_pak)
-        self.Bind(wx.EVT_BUTTON, self._on_toggle_options, self.btn_toggle_options)
+        bind_target.Bind(wx.EVT_BUTTON, self._on_start_pak, self.btn_start_pak)
+        bind_target.Bind(wx.EVT_BUTTON, self._on_stop_pak, self.btn_stop_pak)
+        bind_target.Bind(wx.EVT_BUTTON, self._on_toggle_options, self.btn_toggle_options)
 
         # Checkbox Events
-        self.Bind(wx.EVT_CHECKBOX, self._on_save_filename_cb, self.cb_save_filename)
-        self.Bind(wx.EVT_CHECKBOX, self._on_save_output_dir_cb, self.cb_save_output_dir)
-        self.Bind(wx.EVT_CHECKBOX, self._on_save_target_dir_cb, self.cb_save_target_dir)
-        self.Bind(wx.EVT_CHECKBOX, self._on_ignore_nested_cb, self.cb_ignore_nested_paks)
+        bind_target.Bind(wx.EVT_CHECKBOX, self._on_save_filename_cb, self.cb_save_filename)
+        bind_target.Bind(wx.EVT_CHECKBOX, self._on_save_output_dir_cb, self.cb_save_output_dir)
+        bind_target.Bind(wx.EVT_CHECKBOX, self._on_save_target_dir_cb, self.cb_save_target_dir)
+        bind_target.Bind(wx.EVT_CHECKBOX, self._on_ignore_nested_cb, self.cb_ignore_nested_paks)
 
         # Input Change Events
-        self.Bind(wx.EVT_DIRPICKER_CHANGED, self._on_output_dir_change, self.dp_pak_out_dir)
-        self.Bind(wx.EVT_TEXT, self._on_pak_filename_change, self.text_pak_filename)
-        self.Bind(wx.EVT_DIRPICKER_CHANGED, self._on_target_dir_change, self.dp_target_dir)
-        self.Bind(wx.EVT_TEXT, self._on_pak_max_mb_change, self.text_pak_max_mb)
+        bind_target.Bind(wx.EVT_DIRPICKER_CHANGED, self._on_output_dir_change, self.dp_pak_out_dir)
+        bind_target.Bind(wx.EVT_TEXT, self._on_pak_filename_change, self.text_pak_filename)
+        bind_target.Bind(wx.EVT_DIRPICKER_CHANGED, self._on_target_dir_change, self.dp_target_dir)
+        bind_target.Bind(wx.EVT_TEXT, self._on_pak_max_mb_change, self.text_pak_max_mb)
 
     def _init_ui(self):
         '''
@@ -84,9 +95,10 @@ class KCDPakBuilderGui(MainFrame):
         self.SetTitle("KCD PAK Builder (v%s) by %s" % (self._version, self._author))
 
         # Update Icon
-        icon = wx.Icon()
-        icon.CopyFromBitmap(wx.Bitmap(self._get_icon_path()))
-        self.SetIcon(icon)
+        if not self.GetParent():
+            icon = wx.Icon()
+            icon.CopyFromBitmap(wx.Bitmap(self._get_icon_path()))
+            self.SetIcon(icon)
 
         # ===================================================================================================
         # Process Saved Configuration
@@ -404,7 +416,7 @@ class KCDPakBuilderGui(MainFrame):
         self.Refresh()
         self.panel_options.Layout()
         self.m_panel3.Layout()
-        self.m_panel2.Layout()
+        self.MainPanel.Layout()
         self.Layout()
 
     def _is_filename_valid(self, filename):
