@@ -1,7 +1,7 @@
 pyinstaller ^
     --noupx^
     -F --noconsole --clean ^
-    -n kcd-mod-suite-v1.0.0^
+    -n kcd-mod-suite-v0.1.0^
     --upx-dir=..\resources\upx-4.2.4-win64^
     --paths ..\kcd-mod-generator^
     --paths ..\kcd-pak-builder^
