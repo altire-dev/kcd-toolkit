@@ -5,6 +5,8 @@ import os
 import wx
 import json
 import re
+from kcd_utils import utils
+from kcd_utils import sys_utils
 
 # ===================================================================================================
 # Imports: Internal
@@ -220,7 +222,7 @@ class KCDModGeneratorGui(MainFrame):
         :param event: The Button Event
         :type event: wx.Event
         '''
-        utils.open_explorer_path(self._mod_folder_path)
+        sys_utils.open_explorer(self._mod_folder_path)
 
 
     # ===================================================================================================
