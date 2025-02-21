@@ -20,7 +20,7 @@ _ = gettext.gettext
 class MainFrame ( wx.Frame ):
 
     def __init__( self, parent ):
-        wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = _(u"KCD PAK Builder"), pos = wx.DefaultPosition, size = wx.Size( 600,500 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
+        wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = _(u"KCD PAK Builder"), pos = wx.DefaultPosition, size = wx.Size( 600,600 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
 
         self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
 
@@ -32,58 +32,102 @@ class MainFrame ( wx.Frame ):
         self.m_panel3 = wx.Panel( self.MainPanel, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
         bSizer8 = wx.BoxSizer( wx.VERTICAL )
 
+        sbSizer3 = wx.StaticBoxSizer( wx.StaticBox( self.m_panel3, wx.ID_ANY, _(u"Manual Pack") ), wx.VERTICAL )
+
         bSizer41 = wx.BoxSizer( wx.HORIZONTAL )
 
-        self.m_staticText11 = wx.StaticText( self.m_panel3, wx.ID_ANY, _(u"PAK Filename"), wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.m_staticText11 = wx.StaticText( sbSizer3.GetStaticBox(), wx.ID_ANY, _(u"PAK Filename"), wx.DefaultPosition, wx.DefaultSize, 0 )
         self.m_staticText11.Wrap( -1 )
 
         bSizer41.Add( self.m_staticText11, 3, wx.ALIGN_CENTER|wx.ALL, 5 )
 
-        self.text_pak_filename = wx.TextCtrl( self.m_panel3, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.text_pak_filename = wx.TextCtrl( sbSizer3.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
         self.text_pak_filename.SetToolTip( _(u"The .pak filename to use.\nNote: The .pak extension is optional and will be added if not specified") )
 
         bSizer41.Add( self.text_pak_filename, 7, wx.ALL, 5 )
 
 
-        bSizer8.Add( bSizer41, 0, wx.EXPAND, 5 )
+        sbSizer3.Add( bSizer41, 0, wx.EXPAND, 5 )
 
         bSizer4 = wx.BoxSizer( wx.HORIZONTAL )
 
-        self.m_staticText1 = wx.StaticText( self.m_panel3, wx.ID_ANY, _(u"PAK Output Directory"), wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.m_staticText1 = wx.StaticText( sbSizer3.GetStaticBox(), wx.ID_ANY, _(u"PAK Output Directory"), wx.DefaultPosition, wx.DefaultSize, 0 )
         self.m_staticText1.Wrap( -1 )
 
         bSizer4.Add( self.m_staticText1, 3, wx.ALIGN_CENTER|wx.ALL, 5 )
 
-        self.dp_pak_out_dir = wx.DirPickerCtrl( self.m_panel3, wx.ID_ANY, wx.EmptyString, _(u"Select .pak Output Directory"), wx.DefaultPosition, wx.DefaultSize, wx.DIRP_DEFAULT_STYLE|wx.DIRP_DIR_MUST_EXIST )
+        self.dp_pak_out_dir = wx.DirPickerCtrl( sbSizer3.GetStaticBox(), wx.ID_ANY, wx.EmptyString, _(u"Select .pak Output Directory"), wx.DefaultPosition, wx.DefaultSize, wx.DIRP_DEFAULT_STYLE|wx.DIRP_DIR_MUST_EXIST )
         self.dp_pak_out_dir.SetToolTip( _(u"The Directory that your .pak file will be saved to") )
 
         bSizer4.Add( self.dp_pak_out_dir, 7, wx.ALL, 5 )
 
 
-        bSizer8.Add( bSizer4, 0, wx.EXPAND, 5 )
+        sbSizer3.Add( bSizer4, 0, wx.EXPAND, 5 )
 
         bSizer5 = wx.BoxSizer( wx.HORIZONTAL )
 
-        self.m_staticText2 = wx.StaticText( self.m_panel3, wx.ID_ANY, _(u"Directory To Pack"), wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.m_staticText2 = wx.StaticText( sbSizer3.GetStaticBox(), wx.ID_ANY, _(u"Directory To Pack"), wx.DefaultPosition, wx.DefaultSize, 0 )
         self.m_staticText2.Wrap( -1 )
 
         bSizer5.Add( self.m_staticText2, 3, wx.ALIGN_CENTER|wx.ALL, 5 )
 
-        self.dp_target_dir = wx.DirPickerCtrl( self.m_panel3, wx.ID_ANY, wx.EmptyString, _(u"Select Target Directory"), wx.DefaultPosition, wx.DefaultSize, wx.DIRP_DEFAULT_STYLE|wx.DIRP_DIR_MUST_EXIST )
+        self.dp_target_dir = wx.DirPickerCtrl( sbSizer3.GetStaticBox(), wx.ID_ANY, wx.EmptyString, _(u"Select Target Directory"), wx.DefaultPosition, wx.DefaultSize, wx.DIRP_DEFAULT_STYLE|wx.DIRP_DIR_MUST_EXIST )
         self.dp_target_dir.SetToolTip( _(u"The path of the directory to pack") )
 
         bSizer5.Add( self.dp_target_dir, 7, wx.ALL, 5 )
 
 
-        bSizer8.Add( bSizer5, 0, wx.EXPAND, 5 )
-
-        bSizer81 = wx.BoxSizer( wx.HORIZONTAL )
+        sbSizer3.Add( bSizer5, 0, wx.EXPAND, 5 )
 
 
-        bSizer81.Add( ( 0, 0), 1, wx.EXPAND, 5 )
+        bSizer8.Add( sbSizer3, 1, wx.EXPAND, 5 )
+
+        bSizer6 = wx.BoxSizer( wx.HORIZONTAL )
+
+        self.btn_start_pak = wx.Button( self.m_panel3, wx.ID_ANY, _(u"Build PAK"), wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.btn_start_pak.SetToolTip( _(u"Builds the .pak file") )
+
+        bSizer6.Add( self.btn_start_pak, 1, wx.ALL, 5 )
+
+        self.btn_stop_pak = wx.Button( self.m_panel3, wx.ID_ANY, _(u"Cancel"), wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.btn_stop_pak.Enable( False )
+        self.btn_stop_pak.SetToolTip( _(u"Cancel the Build") )
+
+        bSizer6.Add( self.btn_stop_pak, 1, wx.ALL, 5 )
 
 
-        bSizer8.Add( bSizer81, 0, wx.EXPAND, 5 )
+        bSizer8.Add( bSizer6, 0, wx.EXPAND, 5 )
+
+        sbSizer2 = wx.StaticBoxSizer( wx.StaticBox( self.m_panel3, wx.ID_ANY, _(u"Auto Pack") ), wx.VERTICAL )
+
+        self.Panel_QuickPack = wx.Panel( sbSizer2.GetStaticBox(), wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.BORDER_SUNKEN|wx.TAB_TRAVERSAL )
+        self.Panel_QuickPack.SetBackgroundColour( wx.Colour( 144, 144, 144 ) )
+        self.Panel_QuickPack.SetToolTip( _(u"Immediately Runs an automatic PAK Build of the dropped folder(s)") )
+
+        bSizer15 = wx.BoxSizer( wx.VERTICAL )
+
+
+        bSizer15.Add( ( 0, 0), 1, wx.EXPAND, 5 )
+
+        self.m_staticText6 = wx.StaticText( self.Panel_QuickPack, wx.ID_ANY, _(u"Drop Folders Here"), wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.m_staticText6.Wrap( -1 )
+
+        self.m_staticText6.SetFont( wx.Font( 12, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
+        self.m_staticText6.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_HIGHLIGHTTEXT ) )
+
+        bSizer15.Add( self.m_staticText6, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALL, 20 )
+
+
+        bSizer15.Add( ( 0, 0), 1, wx.EXPAND, 5 )
+
+
+        self.Panel_QuickPack.SetSizer( bSizer15 )
+        self.Panel_QuickPack.Layout()
+        bSizer15.Fit( self.Panel_QuickPack )
+        sbSizer2.Add( self.Panel_QuickPack, 1, wx.EXPAND |wx.ALL, 5 )
+
+
+        bSizer8.Add( sbSizer2, 1, wx.EXPAND, 5 )
 
         self.btn_toggle_options = wx.Button( self.m_panel3, wx.ID_ANY, _(u"Show Additional Options"), wx.DefaultPosition, wx.DefaultSize, 0 )
         self.btn_toggle_options.SetToolTip( _(u"Show/Hide Additional options") )
@@ -148,22 +192,6 @@ class MainFrame ( wx.Frame ):
         bSizer16.Fit( self.panel_options )
         bSizer8.Add( self.panel_options, 0, wx.EXPAND |wx.ALL, 5 )
 
-        bSizer6 = wx.BoxSizer( wx.HORIZONTAL )
-
-        self.btn_start_pak = wx.Button( self.m_panel3, wx.ID_ANY, _(u"Build PAK"), wx.DefaultPosition, wx.DefaultSize, 0 )
-        self.btn_start_pak.SetToolTip( _(u"Builds the .pak file") )
-
-        bSizer6.Add( self.btn_start_pak, 1, wx.ALL, 5 )
-
-        self.btn_stop_pak = wx.Button( self.m_panel3, wx.ID_ANY, _(u"Cancel"), wx.DefaultPosition, wx.DefaultSize, 0 )
-        self.btn_stop_pak.Enable( False )
-        self.btn_stop_pak.SetToolTip( _(u"Cancel the Build") )
-
-        bSizer6.Add( self.btn_stop_pak, 1, wx.ALL, 5 )
-
-
-        bSizer8.Add( bSizer6, 0, wx.EXPAND, 5 )
-
         bs_status = wx.BoxSizer( wx.HORIZONTAL )
 
         self.label_status = wx.StaticText( self.m_panel3, wx.ID_ANY, _(u"Waiting..."), wx.DefaultPosition, wx.DefaultSize, wx.ALIGN_CENTER_HORIZONTAL )
@@ -188,6 +216,14 @@ class MainFrame ( wx.Frame ):
 
 
         bSizer8.Add( sbSizer1, 1, wx.EXPAND, 5 )
+
+        bSizer81 = wx.BoxSizer( wx.HORIZONTAL )
+
+
+        bSizer81.Add( ( 0, 0), 1, wx.EXPAND, 5 )
+
+
+        bSizer8.Add( bSizer81, 0, wx.EXPAND, 5 )
 
 
         self.m_panel3.SetSizer( bSizer8 )
