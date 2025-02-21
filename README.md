@@ -26,6 +26,24 @@ In this repository you'll find a collection of tools, utilities, scripts, and mo
       <td>Application</td>
       <td>Builds the file and folder structure for a new KCD2 mod, including the mod.manifest file</td>
     </tr>
+    <tr>
+      <td><a href="./kcd-asset-finder">KCD Asset Finder</a></td>
+      <td>0.1.0 (pre-release)</td>
+      <td>Application</td>
+      <td>Searches KCD2 PAKs for assets, optionally extracting them</td>
+    </tr>
+    <tr>
+      <td><a href="./kcd-mod-generator">KCD Mod Suite</a></td>
+      <td>0.1.0 (pre-release)</td>
+      <td>Application</td>
+      <td>Full KCD2 Mod Suite Application. Combines all KCD Toolkit applications into a single Application Suite and UI</td>
+    </tr>
+    <tr>
+      <td><a href="./kcd-utils">KCD Utils</a></td>
+      <td>0.1.0 (pre-release)</td>
+      <td>Library</td>
+      <td>Utilty and Helper Python library for KCD2</td>
+    </tr>
   </tbody>
 </table>
 
