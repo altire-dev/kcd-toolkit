@@ -32,6 +32,23 @@ class MainFrame ( wx.Frame ):
         self.m_panel3 = wx.Panel( self.MainPanel, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
         bSizer61 = wx.BoxSizer( wx.VERTICAL )
 
+        self.Panel_KCD2Path = wx.Panel( self.m_panel3, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+        bSizer6111 = wx.BoxSizer( wx.HORIZONTAL )
+
+        self.m_staticText711 = wx.StaticText( self.Panel_KCD2Path, wx.ID_ANY, _(u"KCD2 Path *"), wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.m_staticText711.Wrap( -1 )
+
+        bSizer6111.Add( self.m_staticText711, 3, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
+
+        self.dp_kcd2_path = wx.DirPickerCtrl( self.Panel_KCD2Path, wx.ID_ANY, wx.EmptyString, _(u"Select a folder"), wx.DefaultPosition, wx.DefaultSize, wx.DIRP_DEFAULT_STYLE|wx.DIRP_DIR_MUST_EXIST )
+        bSizer6111.Add( self.dp_kcd2_path, 7, wx.ALL, 5 )
+
+
+        self.Panel_KCD2Path.SetSizer( bSizer6111 )
+        self.Panel_KCD2Path.Layout()
+        bSizer6111.Fit( self.Panel_KCD2Path )
+        bSizer61.Add( self.Panel_KCD2Path, 0, wx.EXPAND |wx.ALL, 0 )
+
         bSizer611 = wx.BoxSizer( wx.HORIZONTAL )
 
         self.m_staticText71 = wx.StaticText( self.m_panel3, wx.ID_ANY, _(u"Search"), wx.DefaultPosition, wx.DefaultSize, 0 )
@@ -44,6 +61,11 @@ class MainFrame ( wx.Frame ):
 
 
         bSizer61.Add( bSizer611, 0, wx.EXPAND, 5 )
+
+        bSizer10 = wx.BoxSizer( wx.VERTICAL )
+
+
+        bSizer61.Add( bSizer10, 1, wx.EXPAND, 5 )
 
         bSizer15 = wx.BoxSizer( wx.HORIZONTAL )
 
@@ -82,12 +104,12 @@ class MainFrame ( wx.Frame ):
 
         bSizer8.Add( self.label_status, 1, wx.ALL, 5 )
 
-        self.label_percentage = wx.StaticText( sbSizer2.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.ALIGN_RIGHT )
+        self.label_percentage = wx.StaticText( sbSizer2.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
         self.label_percentage.Wrap( -1 )
 
         self.label_percentage.SetFont( wx.Font( wx.NORMAL_FONT.GetPointSize(), wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
 
-        bSizer8.Add( self.label_percentage, 1, wx.ALL, 5 )
+        bSizer8.Add( self.label_percentage, 0, wx.ALL, 5 )
 
 
         sbSizer2.Add( bSizer8, 1, wx.EXPAND, 5 )
@@ -101,8 +123,8 @@ class MainFrame ( wx.Frame ):
 
         sbSizer5 = wx.StaticBoxSizer( wx.StaticBox( self.m_panel3, wx.ID_ANY, _(u"Results") ), wx.VERTICAL )
 
-        self.results_tree = wx.TreeCtrl( sbSizer5.GetStaticBox(), wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TR_DEFAULT_STYLE )
-        sbSizer5.Add( self.results_tree, 1, wx.ALL|wx.EXPAND, 5 )
+        self.tree_widget = wx.TreeCtrl( sbSizer5.GetStaticBox(), wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TR_DEFAULT_STYLE|wx.TR_MULTIPLE )
+        sbSizer5.Add( self.tree_widget, 1, wx.ALL|wx.EXPAND, 5 )
 
 
         bSizer61.Add( sbSizer5, 1, wx.EXPAND, 5 )
@@ -118,16 +140,44 @@ class MainFrame ( wx.Frame ):
 
         bSizer61.Add( bSizer9, 0, wx.EXPAND, 5 )
 
+        self.Panel_Export = wx.Panel( self.m_panel3, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+        sbSizer3 = wx.StaticBoxSizer( wx.StaticBox( self.Panel_Export, wx.ID_ANY, _(u"Asset Export") ), wx.VERTICAL )
+
+        bSizer16 = wx.BoxSizer( wx.VERTICAL )
+
+        bSizer19 = wx.BoxSizer( wx.HORIZONTAL )
+
+        self.m_staticText7111 = wx.StaticText( sbSizer3.GetStaticBox(), wx.ID_ANY, _(u"Export Path"), wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.m_staticText7111.Wrap( -1 )
+
+        bSizer19.Add( self.m_staticText7111, 3, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
+
+        self.dp_export_path = wx.DirPickerCtrl( sbSizer3.GetStaticBox(), wx.ID_ANY, wx.EmptyString, _(u"Select a folder"), wx.DefaultPosition, wx.DefaultSize, wx.DIRP_DEFAULT_STYLE|wx.DIRP_DIR_MUST_EXIST )
+        self.dp_export_path.Enable( False )
+
+        bSizer19.Add( self.dp_export_path, 7, wx.ALL, 5 )
+
+
+        bSizer16.Add( bSizer19, 1, wx.EXPAND, 5 )
+
         bSizer6 = wx.BoxSizer( wx.HORIZONTAL )
 
-        self.m_button1 = wx.Button( self.m_panel3, wx.ID_ANY, _(u"Save Results"), wx.DefaultPosition, wx.DefaultSize, 0 )
-        bSizer6.Add( self.m_button1, 1, wx.ALL, 5 )
+        self.btn_export = wx.Button( sbSizer3.GetStaticBox(), wx.ID_ANY, _(u"Export Selected"), wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.btn_export.Enable( False )
 
-        self.m_button2 = wx.Button( self.m_panel3, wx.ID_ANY, _(u"Export Selected"), wx.DefaultPosition, wx.DefaultSize, 0 )
-        bSizer6.Add( self.m_button2, 1, wx.ALL, 5 )
+        bSizer6.Add( self.btn_export, 1, wx.ALL, 5 )
 
 
-        bSizer61.Add( bSizer6, 0, wx.EXPAND, 5 )
+        bSizer16.Add( bSizer6, 1, wx.EXPAND, 5 )
+
+
+        sbSizer3.Add( bSizer16, 1, wx.EXPAND, 5 )
+
+
+        self.Panel_Export.SetSizer( sbSizer3 )
+        self.Panel_Export.Layout()
+        sbSizer3.Fit( self.Panel_Export )
+        bSizer61.Add( self.Panel_Export, 0, wx.EXPAND |wx.ALL, 5 )
 
 
         self.m_panel3.SetSizer( bSizer61 )
@@ -144,6 +194,57 @@ class MainFrame ( wx.Frame ):
 
         self.SetSizer( bSizer3 )
         self.Layout()
+
+        self.Centre( wx.BOTH )
+
+    def __del__( self ):
+        pass
+
+
+###########################################################################
+## Class MessageDialog
+###########################################################################
+
+class MessageDialog ( wx.Dialog ):
+
+    def __init__( self, parent ):
+        wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = _(u"Info"), pos = wx.DefaultPosition, size = wx.DefaultSize, style = wx.DEFAULT_DIALOG_STYLE )
+
+        self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
+
+        bSizer25 = wx.BoxSizer( wx.VERTICAL )
+
+        self.m_panel5 = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+        bSizer26 = wx.BoxSizer( wx.VERTICAL )
+
+        bSizer27 = wx.BoxSizer( wx.VERTICAL )
+
+        self.m_staticText11 = wx.StaticText( self.m_panel5, wx.ID_ANY, _(u"This is the Dialog Message"), wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.m_staticText11.Wrap( -1 )
+
+        bSizer27.Add( self.m_staticText11, 0, wx.ALL, 5 )
+
+
+        bSizer26.Add( bSizer27, 1, wx.EXPAND, 5 )
+
+        bSizer28 = wx.BoxSizer( wx.VERTICAL )
+
+        self.btn_ok = wx.Button( self.m_panel5, wx.ID_ANY, _(u"OK"), wx.DefaultPosition, wx.DefaultSize, 0 )
+        bSizer28.Add( self.btn_ok, 0, wx.ALL, 5 )
+
+
+        bSizer26.Add( bSizer28, 1, wx.ALIGN_CENTER_HORIZONTAL, 5 )
+
+
+        self.m_panel5.SetSizer( bSizer26 )
+        self.m_panel5.Layout()
+        bSizer26.Fit( self.m_panel5 )
+        bSizer25.Add( self.m_panel5, 1, wx.EXPAND |wx.ALL, 10 )
+
+
+        self.SetSizer( bSizer25 )
+        self.Layout()
+        bSizer25.Fit( self )
 
         self.Centre( wx.BOTH )
 

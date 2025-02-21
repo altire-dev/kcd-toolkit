@@ -4,11 +4,13 @@
 import os
 import wx
 import json
-from .asset_finder import AssetFinder
+from kcd_utils import utils
+from kcd_utils import pak_utils
 
 # ===================================================================================================
 # Imports: Internal
 # ===================================================================================================
+from .asset_finder import AssetFinder
 from .abs_gui import MainFrame
 
 # ===================================================================================================
@@ -22,6 +24,7 @@ class KCDAssetFinderGui(MainFrame):
     # ===================================================================================================
     # Properties
     # ===================================================================================================
+    ROOT_NODE_LABEL = "PAKs"
 
     # ===================================================================================================
     # Class Functions
@@ -49,6 +52,7 @@ class KCDAssetFinderGui(MainFrame):
         self._paks = {}
         self._tids = {}
         self._pak_tree = {}
+        self._selected_items = []
 
         # Initialise Frame
         super(KCDAssetFinderGui, self).__init__(suite)
@@ -69,7 +73,8 @@ class KCDAssetFinderGui(MainFrame):
         bind_target.Bind(wx.EVT_BUTTON, self._on_cancel, self.btn_cancel)
         bind_target.Bind(wx.EVT_BUTTON, self._on_expand_all, self.btn_expand_all)
         bind_target.Bind(wx.EVT_BUTTON, self._on_collapse_all, self.btn_collapse_all)
-        bind_target.Bind(wx.EVT_TREE_SEL_CHANGED, self._on_tree_selection_changed, self.results_tree)
+        bind_target.Bind(wx.EVT_BUTTON, self._on_export, self.btn_export)
+        bind_target.Bind(wx.EVT_TREE_SEL_CHANGED, self._on_tree_selection_changed, self.tree_widget)
 
     def _init_ui(self):
         '''
@@ -83,23 +88,72 @@ class KCDAssetFinderGui(MainFrame):
             icon.CopyFromBitmap(wx.Bitmap(self._get_icon_path()))
             self.SetIcon(icon)
 
+            # Auto Detect KCD2 path
+            kcd2_path = utils.find_kcd2_path()
+            self.dp_kcd2_path.SetPath(kcd2_path)
+
     # ===================================================================================================
     # Event Handlers/Callbacks
     # ===================================================================================================
+    def _on_export(self, event):
+        '''
+        The Export Selected Button Callback. Called when the Export Selected button is clicked
+
+        :param event: The button event
+        :type event: wx.Event
+        '''
+        # ===================================================================================================
+        # Process Input
+        # ===================================================================================================
+        export_path = self.dp_export_path.GetPath()
+
+        # ===================================================================================================
+        # Validate Input
+        # ===================================================================================================
+        if not os.path.isdir(export_path):
+            self.label_status.SetLabel("Error: Export Path does not exist")
+            return
+
+        # ===================================================================================================
+        # Export!
+        # ===================================================================================================
+        for pak, asset  in self._selected_items:
+            pak_path = os.path.join(self.dp_kcd2_path.GetPath(), "Data", pak)
+            pak_utils.export_pak_asset(export_path, pak_path, asset)
+
+
     def _on_tree_selection_changed(self, event):
-        print(self.results_tree.GetSelection())
-        path_to_parent = []
-        item = event.GetItem()
-        path_to_parent.append(self.results_tree.GetItemText(item))
-        parent = self.results_tree.GetItemParent(item)
-        while parent.IsOk():
-            path_to_parent.append(self.results_tree.GetItemText(parent))
-            parent = self.results_tree.GetItemParent(parent)
+        '''
+        Tree Selection Changed Callback. Called when the selection in the tree control is changed
+        :param event:
+        :return:
+        '''
+        can_export = True
+        self._selected_items.clear()
 
-        print(path_to_parent)
+        # ===================================================================================================
+        # Converted Selected Nodes into Asset Items
+        # ===================================================================================================
+        selected_nodes = self.tree_widget.GetSelections()
+        for selected_node in selected_nodes:
+            pak, asset_path = self._build_item_asset_path(selected_node)
+            if pak and asset_path:
+                self._selected_items.append((pak, asset_path))
+                path_sections = asset_path.split("/")
+                if not path_sections or not "." in path_sections[-1]:
+                    can_export = False
+            else:
+                can_export = False
 
-        print(self.results_tree.GetItemText(item))
-        print(self.results_tree.GetItemParent(item))
+        # ===================================================================================================
+        # Update Export Button state
+        # ===================================================================================================
+        if can_export:
+            self.btn_export.Enable()
+            self.dp_export_path.Enable()
+        else:
+            self.btn_export.Disable()
+            self.dp_export_path.Disable()
 
     def _on_search(self, event):
         '''
@@ -108,13 +162,24 @@ class KCDAssetFinderGui(MainFrame):
         :param event: The Button Event
         :type event: wx.Event
         '''
-        self.results_tree.DeleteAllItems()
-        search_string = self.text_search.GetValue().lower()
-        asset_type = self.choice_asset_type.GetStringSelection().lower()
 
-        target_dir = "E:\\SteamLibrary\\steamapps\\common\\KingdomComeDeliverance2\\Data"
-        # target_dir = "E:\\dev\\projects\\kcd-modding\\kdc2\\experimental\\asset_finder_playground"
-        self._af = AssetFinder(self, target_dir)
+        # ===================================================================================================
+        # Process User Input
+        # ===================================================================================================
+        search_string   = self.text_search.GetValue().lower()
+        asset_type      = self.choice_asset_type.GetStringSelection().lower()
+        kcd2_path       = self.dp_kcd2_path.GetPath()
+
+        # ===================================================================================================
+        # Validate Input
+        # ===================================================================================================
+        if not os.path.isdir(kcd2_path):
+            self.label_status.SetLabel("Error: KCD2 Path Does not exist")
+            return
+        target_dir = os.path.join(kcd2_path, "Data")
+        if not os.path.isdir(target_dir):
+            self.label_status.SetLabel("Error: Invalid KCD2 Path. Data directory not found")
+            return
 
         # ===================================================================================================
         # Update UI
@@ -122,6 +187,17 @@ class KCDAssetFinderGui(MainFrame):
         self.btn_search.Disable()
         self.btn_cancel.Enable()
 
+        # ===================================================================================================
+        # Set Up Tree
+        # ===================================================================================================
+        self.tree_widget.DeleteAllItems()
+        tid_root = self.tree_widget.AddRoot(self.ROOT_NODE_LABEL)
+        self.tree_widget.Expand(tid_root)
+
+        # ===================================================================================================
+        # Initiate Search
+        # ===================================================================================================
+        self._af = AssetFinder(self, target_dir)
         self._af.start_search(search_string, asset_type)
 
     def _on_expand_all(self, event):
@@ -131,8 +207,7 @@ class KCDAssetFinderGui(MainFrame):
         :param event: The Button Event
         :type event: wx.Event
         '''
-        self._af.set_auto_expand(True)
-        self.results_tree.ExpandAll()
+        self.tree_widget.ExpandAll()
         self.Layout()
 
     def _on_collapse_all(self, event):
@@ -142,13 +217,13 @@ class KCDAssetFinderGui(MainFrame):
         :param event: The Button Event
         :type event: wx.Event
         '''
-        self._af.set_auto_expand(False)
-        tid_root = self.results_tree.GetRootItem()
-        child_ref, child_cookie = self.results_tree.GetFirstChild(tid_root)
-        while child_ref.IsOk():
-            self.results_tree.Collapse(child_ref)
-            child_ref, child_cookie = self.results_tree.GetNextChild(tid_root, child_cookie)
-        self.Layout()
+        tid_root = self.tree_widget.GetRootItem()
+        if tid_root.IsOk():
+            child_ref, child_cookie = self.tree_widget.GetFirstChild(tid_root)
+            while child_ref.IsOk():
+                self.tree_widget.Collapse(child_ref)
+                child_ref, child_cookie = self.tree_widget.GetNextChild(tid_root, child_cookie)
+            self.Layout()
 
     def _on_cancel(self, event):
         '''
@@ -181,9 +256,7 @@ class KCDAssetFinderGui(MainFrame):
         '''
         Called when a new match is found
         '''
-        self._match_count += 1
-        self.label_matches.SetLabel("%s match(es)" % self._match_count)
-        self.Layout()
+        pass
 
     def on_pak_processed(self, pak):
         '''
@@ -192,12 +265,14 @@ class KCDAssetFinderGui(MainFrame):
         :param pak: The PAK that was successfully processed
         :type pak: str
         '''
+        # Update Search Status
         pak_idx = list(self._paks.keys()).index(pak)
         self.pb_search.SetValue(pak_idx)
 
-        # Calculate Progress Percentage
+        # Update Search Percentage
         progress_percent = int(pak_idx / (len(self._paks) - 1) * 100)
         self.label_percentage.SetLabel("%s%%" % progress_percent)
+        # self.Layout()
 
     def on_processing_pak(self, pak):
         '''
@@ -208,7 +283,6 @@ class KCDAssetFinderGui(MainFrame):
         '''
         self.label_status.SetLabel("Processing %s" % pak)
 
-
     def on_match_found(self, pak, asset):
         '''
         Asset match callback. Called when a matching asset is found
@@ -218,8 +292,20 @@ class KCDAssetFinderGui(MainFrame):
         '''
 
         for path in asset.split("/"):
-            self.results_tree.AppendItem(pak, path)
+            self.tree_widget.AppendItem(pak, path)
 
+
+    # ===================================================================================================
+    # Getters
+    # ===================================================================================================
+    def get_tree(self):
+        '''
+        Gets the results tree widget
+
+        :return: The Results Tree widget instance
+        :rtype: wx.TreeCtrl
+        '''
+        return self.tree_widget
 
     # ===================================================================================================
     # Setters
@@ -233,7 +319,6 @@ class KCDAssetFinderGui(MainFrame):
         '''
         self._paks = paks
         self.pb_search.SetRange(len(self._paks) - 1)
-
 
     # ===================================================================================================
     # Internal/Helper Methods
@@ -255,3 +340,39 @@ class KCDAssetFinderGui(MainFrame):
             icon_path = os.path.join(os.path.dirname(__file__), "resources", "icon.ico")
 
         return icon_path
+
+    def _build_item_asset_path(self, item):
+        '''
+        Builds the absolute PAK path to an asset from a tree node item
+
+        :param item: The Tree Item that was selected
+        :type item: wx.TreeItemId
+        :return: Asset PAK, and complete path for the node item inside PAK
+        :rtype: tuple
+        '''
+        pak = None
+        asset_location = None
+        tree_path = []
+        item_label = self.tree_widget.GetItemText(item)
+
+        parent = self.tree_widget.GetItemParent(item)
+        while parent.IsOk():
+            parent_label = self.tree_widget.GetItemText(parent)
+            if parent_label == self.ROOT_NODE_LABEL:
+                break
+            tree_path.append(parent_label)
+            parent = self.tree_widget.GetItemParent(parent)
+
+
+        # ===================================================================================================
+        # Rebuild Path
+        # ===================================================================================================
+        if len(tree_path) > 0:
+            pak = tree_path[-1]
+            asset_location = "/".join(
+                list(reversed(tree_path[:-1])) + [item_label]
+            )
+
+        print("Asset Location: %s" % asset_location)
+
+        return pak, asset_location

@@ -48,7 +48,7 @@ class AssetFinder(Thread):
         self._search_string = ""
         self._asset_type = "any"
         self._stop_event = Event()
-        self._auto_expand = False
+        self._asset_tree = {}
         super(AssetFinder, self).__init__()
 
     def start_search(self, search_string, asset_type):
@@ -70,9 +70,7 @@ class AssetFinder(Thread):
         Thread Runner. Performs the search
         :return:
         '''
-        results_tree = self._gui.results_tree
-        limit = 40
-        counter = 0
+        self._asset_tree = {}
 
         # ===================================================================================================
         # Run PAK Discovery
@@ -80,69 +78,42 @@ class AssetFinder(Thread):
         paks = pak_utils.find_paks(self._target_dir)
         self._gui.set_paks(paks)
 
-        # Tree Node Tests
-        tid_root = results_tree.AddRoot("PAKs")
+        # ===================================================================================================
+        # Search PAK Files
+        # ===================================================================================================
+        self.search_paks(paks)
+
+    def search_paks(self, paks):
+        '''
+        Searches the provided PAK Files
+
+        :param paks: A List of PAK Files to search
+        :type paks: dict
+        '''
+        tree_widget = self._gui.get_tree()
+        tid_root = tree_widget.GetRootItem()
+
+        # ===================================================================================================
+        # Iterate PAKs
+        # ===================================================================================================
         for pak_name, pak in paks.items():
-            tree = {}
-            has_been_collapsed = False
-            # time.sleep(2)
+            self._asset_tree[pak_name] = {}
             self._gui.on_processing_pak(pak_name)
 
-            if not results_tree.IsExpanded(tid_root):
-                results_tree.Expand(tid_root)
-            tid_pak = results_tree.AppendItem(tid_root, pak_name)
-            for asset in pak_utils.get_pak_file_list(pak["abs_path"]):
-                print("ASSET: %s" % asset)
-                if self._is_matching_asset(asset.lower()):
+            # Add PAK to tree
+            tid_pak = tree_widget.AppendItem(tid_root, pak_name)
+            if not tree_widget.IsExpanded(tid_root):
+                tree_widget.Expand(tid_root)
 
-                    # ===================================================================================================
-                    # Splitting Test Start
-                    # ===================================================================================================
-                    # self._gui.on_match_found(tid_pak, asset)
-                    parent = tid_pak
-                    path_sections = asset.split("/")
-                    for idx in range(len(path_sections)):
-                        path_section = path_sections[idx]
-                        abs_path = "/".join(path_sections[:idx+1])
-                        print(abs_path)
-                        if abs_path not in tree:
-                            print("Abs Path not in tree: %s" % abs_path)
-                            print("Adding item: %s" % path_section)
-                            parent = results_tree.AppendItem(parent, path_section)
-                            tree[abs_path] = parent
-                        else:
-                            parent = tree[abs_path]
+            # Search PAK Assets
+            self.search_pak_assets(pak_name, pak, tid_pak, tree_widget)
 
-                    # for path_section in asset.split("/"):
-                    #     print(path_section)
-                    #     parent = results_tree.AppendItem(parent, path_section)
-
-                    # if asset not in tree:
-                    #     tid_item = results_tree.AppendItem(tid_pak, asset)
-
-                    # ===================================================================================================
-                    # Splitting Test End
-                    # tid_item = results_tree.AppendItem(tid_pak, asset)
-
-                    if self._auto_expand:
-                        if not results_tree.IsExpanded(tid_pak):
-                            results_tree.ExpandAllChildren(tid_pak)
-                    else:
-                        if not has_been_collapsed:
-                            results_tree.Collapse(tid_pak)
-                            has_been_collapsed = True
-
-                # Check Interrupt
-                if self._stop_event.is_set():
-                    break
-
-           # Check Interrupt
-            if self._stop_event.is_set():
+            # Check for Interrupt
+            if self.was_stopped():
                 self._gui.on_search_cancelled()
                 break
-            else:
-                self._gui.on_pak_processed(pak_name)
 
+            self._gui.on_pak_processed(pak_name)
 
         # ===================================================================================================
         # Success - Search Finished
@@ -150,6 +121,45 @@ class AssetFinder(Thread):
         if not self.was_stopped():
             self._gui.on_search_success()
 
+
+    def search_pak_assets(self, pak_name, pak, tid_pak, tree_widget):
+        '''
+        Searches the specified PAK assets for matches
+
+        :param pak: The PAK to search
+        :type pak: dict
+        :return:
+        '''
+        # ===================================================================================================
+        # Iterate PAK Assets
+        # ===================================================================================================
+        for asset in pak_utils.get_pak_assets(pak["abs_path"]):
+            # print("ASSET: %s" % asset)
+            if not self._is_matching_asset(asset.lower()):
+                continue
+
+            # ===================================================================================================
+            # Iterate and Traverse Asset path
+            # ===================================================================================================
+            tid_parent = tid_pak
+            path_sections = asset.split("/")
+            for idx in range(len(path_sections)):
+                path_section = path_sections[idx]                                   # e.g. humans
+                current_traversal = "/".join(path_sections[:idx+1])                 # e.g. Animations/humans
+
+                # Check if tree node already exists for current traversal
+                # True: Add to tree and set that as new parent
+                if current_traversal in self._asset_tree[pak_name]:
+                    tid_parent = self._asset_tree[pak_name][current_traversal]
+                    continue
+
+                # False! Add current traversal to tree and THEN use THAT as parent node
+                tid_parent = tree_widget.AppendItem(tid_parent, path_section)
+                self._asset_tree[pak_name][current_traversal] = tid_parent
+
+            # Check for Interrupt
+            if self.was_stopped():
+                break
 
     # ===================================================================================================
     # Getters
@@ -163,18 +173,6 @@ class AssetFinder(Thread):
         '''
         return self._stop_event.is_set()
 
-
-    # ===================================================================================================
-    # Setters
-    # ===================================================================================================
-    def set_auto_expand(self, auto_expand):
-        '''
-        Sets the auto-expand state
-
-        :param auto_expand: The new auto-expand state
-        :type auto_expand: bool
-        '''
-        self._auto_expand = auto_expand
 
     # ===================================================================================================
     # Internal Functions
