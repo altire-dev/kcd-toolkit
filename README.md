@@ -39,10 +39,10 @@ In this repository you'll find a collection of tools, utilities, scripts, and mo
       <td>Full KCD2 Mod Suite Application. Combines all KCD Toolkit applications into a single Application Suite and UI</td>
     </tr>
     <tr>
-      <td><a href="./kcd-utils">KCD Utils</a></td>
+      <td><a href="./kcd-core">KCD Core</a></td>
       <td>0.1.0 (pre-release)</td>
       <td>Library</td>
-      <td>Utilty and Helper Python library for KCD2</td>
+      <td>Core Library for working with KCD2. Contains classes, functions and more</td>
     </tr>
   </tbody>
 </table>
