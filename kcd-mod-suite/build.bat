@@ -6,6 +6,6 @@ pyinstaller ^
     --paths ..\kcd-mod-generator^
     --paths ..\kcd-pak-builder^
     --paths ..\kcd-asset-finder^
-    --paths ..\kcd-utils^
+    --paths ..\kcd-core^
     --icon=.\kcd_mod_suite\resources\icon.ico^
     .\main.py
