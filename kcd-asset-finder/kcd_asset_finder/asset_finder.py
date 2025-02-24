@@ -1,14 +1,13 @@
 # ===================================================================================================
 # Imports: External
 # ===================================================================================================
-import time
-import os
-import zipfile
-import json
 import re
 from threading import Thread
 from threading import Event
-from kcd_utils import pak_utils
+from kcd_core.utils import pak_utils
+from kcd_core.components.pak import PAKFile
+from kcd_core.components.pak import PAKAsset
+from kcd_core.components.pak.pak_asset_types import *
 
 # ===================================================================================================
 # Imports: Internal
@@ -27,9 +26,6 @@ class AssetFinder(Thread):
     # ===================================================================================================
     # Properties
     # ===================================================================================================
-    ASSET_TYPE_ANY      = "any"
-    ASSET_TYPE_MATERIAL = "material"
-    ASSET_TYPE_TEXTURE  = "texture"
 
     # ===================================================================================================
     # Methods
@@ -127,22 +123,22 @@ class AssetFinder(Thread):
         Searches the specified PAK assets for matches
 
         :param pak: The PAK to search
-        :type pak: dict
+        :type pak: PAKFile
         :return:
         '''
         # ===================================================================================================
         # Iterate PAK Assets
         # ===================================================================================================
-        for asset in pak_utils.get_pak_assets(pak["abs_path"]):
+        for asset in pak.get_assets():
             # print("ASSET: %s" % asset)
-            if not self._is_matching_asset(asset.lower()):
+            if not self._is_matching_asset(asset):
                 continue
 
             # ===================================================================================================
             # Iterate and Traverse Asset path
             # ===================================================================================================
+            path_sections = asset.get_path_sections()
             tid_parent = tid_pak
-            path_sections = asset.split("/")
             for idx in range(len(path_sections)):
                 path_section = path_sections[idx]                                   # e.g. humans
                 current_traversal = "/".join(path_sections[:idx+1])                 # e.g. Animations/humans
@@ -181,33 +177,22 @@ class AssetFinder(Thread):
         '''
         Checks if the target asset matches the current search
 
-        :param asset: The path of the asset being checked
-        :type asset: str
+        :param asset: The PAKAsset being checked
+        :type asset: PAKAsset
         :return: True if the asset matches, otherwise False
         :rtype: bool
         '''
 
         # ===================================================================================================
-        # Asset Type Check
+        # Match Asset Type
         # ===================================================================================================
-        if self._asset_type != self.ASSET_TYPE_ANY:
-            # ===================================================================================================
-            # Asset - Material
-            # ===================================================================================================
-            if self._asset_type == self.ASSET_TYPE_MATERIAL:
-                if not asset.endswith(".mtl"):
-                    return False
-            # ===================================================================================================
-            # Asset - Texture
-            # ===================================================================================================
-            if self._asset_type == self.ASSET_TYPE_TEXTURE:
-                if not re.match(".*\.dds(\d+)*$", asset):
-                    return False
+        if self._asset_type != ASSET_ANY and asset.is_of_type(self._asset_type):
+            return False
 
         # ===================================================================================================
-        # Search String Check
+        # Match Search String
         # ===================================================================================================
-        if self._search_string and self._search_string not in asset:
+        if self._search_string and self._search_string not in asset.get_filename():
             return False
 
         return True

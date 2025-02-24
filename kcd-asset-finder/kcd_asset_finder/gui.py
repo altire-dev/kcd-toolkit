@@ -3,9 +3,8 @@
 # ===================================================================================================
 import os
 import wx
-import json
-from kcd_utils import utils
-from kcd_utils import pak_utils
+from kcd_core.utils import sys_utils
+from kcd_core.utils import pak_utils
 
 # ===================================================================================================
 # Imports: Internal
@@ -89,7 +88,7 @@ class KCDAssetFinderGui(MainFrame):
             self.SetIcon(icon)
 
             # Auto Detect KCD2 path
-            kcd2_path = utils.find_kcd2_path()
+            kcd2_path = sys_utils.find_kcd2_path()
             self.dp_kcd2_path.SetPath(kcd2_path)
 
     # ===================================================================================================
@@ -118,8 +117,7 @@ class KCDAssetFinderGui(MainFrame):
         # Export!
         # ===================================================================================================
         for pak, asset  in self._selected_items:
-            pak_path = os.path.join(self.dp_kcd2_path.GetPath(), "Data", pak)
-            pak_utils.export_pak_asset(export_path, pak_path, asset)
+            pak.export_asset(asset, export_path)
 
 
     def _on_tree_selection_changed(self, event):
@@ -136,12 +134,9 @@ class KCDAssetFinderGui(MainFrame):
         # ===================================================================================================
         selected_nodes = self.tree_widget.GetSelections()
         for selected_node in selected_nodes:
-            pak, asset_path = self._build_item_asset_path(selected_node)
-            if pak and asset_path:
-                self._selected_items.append((pak, asset_path))
-                path_sections = asset_path.split("/")
-                if not path_sections or not "." in path_sections[-1]:
-                    can_export = False
+            pak, asset = self._resolve_node_to_asset(selected_node)
+            if pak and asset:
+                self._selected_items.append((pak, asset))
             else:
                 can_export = False
 
@@ -341,21 +336,22 @@ class KCDAssetFinderGui(MainFrame):
 
         return icon_path
 
-    def _build_item_asset_path(self, item):
+    def _resolve_node_to_asset(self, node):
         '''
         Builds the absolute PAK path to an asset from a tree node item
 
-        :param item: The Tree Item that was selected
-        :type item: wx.TreeItemId
-        :return: Asset PAK, and complete path for the node item inside PAK
-        :rtype: tuple
+        :param node: The Tree node that was selected
+        :type node: wx.TreeItemId
+        :return: PAKFile and PAKAsset for target node
+        :rtype: tuple(PAKFile, PAKAsset)
         '''
         pak = None
         asset_location = None
+        asset = None
         tree_path = []
-        item_label = self.tree_widget.GetItemText(item)
+        node_label = self.tree_widget.GetItemText(node)
 
-        parent = self.tree_widget.GetItemParent(item)
+        parent = self.tree_widget.GetItemParent(node)
         while parent.IsOk():
             parent_label = self.tree_widget.GetItemText(parent)
             if parent_label == self.ROOT_NODE_LABEL:
@@ -368,11 +364,13 @@ class KCDAssetFinderGui(MainFrame):
         # Rebuild Path
         # ===================================================================================================
         if len(tree_path) > 0:
-            pak = tree_path[-1]
+            pak_name = tree_path[-1]
+            pak = self._paks[pak_name]
             asset_location = "/".join(
-                list(reversed(tree_path[:-1])) + [item_label]
+                list(reversed(tree_path[:-1])) + [node_label]
             )
 
-        print("Asset Location: %s" % asset_location)
+        if pak:
+            asset = pak.get_asset_by_path(asset_location)
 
-        return pak, asset_location
+        return pak, asset
