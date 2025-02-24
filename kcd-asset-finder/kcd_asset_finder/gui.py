@@ -267,7 +267,7 @@ class KCDAssetFinderGui(MainFrame):
         # Update Search Percentage
         progress_percent = int(pak_idx / (len(self._paks) - 1) * 100)
         self.label_percentage.SetLabel("%s%%" % progress_percent)
-        # self.Layout()
+        self.Layout()
 
     def on_processing_pak(self, pak):
         '''
