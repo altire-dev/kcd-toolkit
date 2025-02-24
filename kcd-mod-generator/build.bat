@@ -6,4 +6,5 @@ pyinstaller ^
     --icon=.\kcd_mod_generator\resources\icon.ico^
     --add-data kcd_mod_generator\resources\icon.ico:resources^
     --add-data kcd_mod_generator\resources\modding_eula.txt:resources^
+    --paths ..\kcd-core^
     .\main.py
