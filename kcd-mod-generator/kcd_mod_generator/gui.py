@@ -5,8 +5,8 @@ import os
 import wx
 import json
 import re
-from kcd_utils import utils
-from kcd_utils import sys_utils
+from kcd_core import utils
+from kcd_core.utils import sys_utils
 
 # ===================================================================================================
 # Imports: Internal
