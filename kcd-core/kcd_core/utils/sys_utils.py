@@ -1,15 +1,15 @@
 # ===================================================================================================
-# General Utilities and Helpers
+# System Utilites and Helpers
 # ===================================================================================================
-
 # ===================================================================================================
 # Imports: External
 # ===================================================================================================
 import os
 import psutil
+import subprocess
 
 # ===================================================================================================
-# Utility/Helper Methods
+# System Utility/Helper Methods
 # ===================================================================================================
 def find_kcd2_path():
     '''
@@ -33,3 +33,13 @@ def find_kcd2_path():
             break
 
     return path
+
+def open_explorer(path):
+    '''
+    Opens Windows Explorer at the specified path
+
+    :param path: The target path
+    :type path: str
+    '''
+    cmd = 'explorer "%s"' % path
+    subprocess.Popen(cmd)
