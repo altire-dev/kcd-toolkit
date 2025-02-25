@@ -10,6 +10,12 @@ from wx._core import wxAssertionError
 from .gui import KCDModSuiteGui
 
 # ===================================================================================================
+# Properties
+# ===================================================================================================
+VERSION = "0.1.1"
+AUTHOR  = "Altire"
+
+# ===================================================================================================
 # KCD Mod Suite Class
 # ===================================================================================================
 class KCDModSuite():
@@ -17,13 +23,13 @@ class KCDModSuite():
     KCD Mod Suite. Main object for KCD Mod Suite Package
     '''
 
-    def __init__(self, version, author):
+    def __init__(self):
         '''
         Constructor
         '''
         # Initialise the GUI
         self._app = wx.App()
-        self._gui = KCDModSuiteGui(version, author)
+        self._gui = KCDModSuiteGui(VERSION, AUTHOR)
 
     def launch(self):
         '''
