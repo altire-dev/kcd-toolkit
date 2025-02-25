@@ -3,6 +3,7 @@
 # ===================================================================================================
 import os
 import wx
+import json
 from kcd_core.utils import sys_utils
 from kcd_core.utils import pak_utils
 
@@ -25,6 +26,9 @@ class KCDAssetFinderGui(MainFrame):
     # Properties
     # ===================================================================================================
     ROOT_NODE_LABEL = "PAKs"
+
+    CFG_KEY_KCD2_PATH   = "kcd2_path"
+    CFG_KEY_EXPORT_PATH = "export_path"
 
     # ===================================================================================================
     # Class Functions
@@ -54,6 +58,10 @@ class KCDAssetFinderGui(MainFrame):
         self._pak_tree = {}
         self._selected_items = []
 
+        # Load Configuration
+        self._cfg_path = self._get_cfg_path()
+        self._cfg = self._load_cfg()
+
         # Initialise Frame
         super(KCDAssetFinderGui, self).__init__(suite)
 
@@ -79,6 +87,12 @@ class KCDAssetFinderGui(MainFrame):
         bind_target.Bind(wx.EVT_BUTTON, self._on_export, self.btn_export)
 
         # ===================================================================================================
+        # Input Change Events
+        # ===================================================================================================
+        bind_target.Bind(wx.EVT_DIRPICKER_CHANGED, self._on_kcd2_path_change, self.dp_kcd2_path)
+        bind_target.Bind(wx.EVT_DIRPICKER_CHANGED, self._on_export_path_change, self.dp_export_path)
+
+        # ===================================================================================================
         # Misc Events
         # ===================================================================================================
         bind_target.Bind(wx.EVT_TEXT_ENTER, self._on_search, self.text_search)
@@ -97,14 +111,45 @@ class KCDAssetFinderGui(MainFrame):
             icon.CopyFromBitmap(wx.Bitmap(self._get_icon_path()))
             self.SetIcon(icon)
 
-            # Auto Detect KCD2 path
+        # ===================================================================================================
+        # Process Saved Configuration
+        # ===================================================================================================
+        # Config: KCD2 Path
+        kcd2_path = self._cfg.get(self.CFG_KEY_KCD2_PATH, "")
+        if not kcd2_path:
+            # Attempt auto-detection
             kcd2_path = sys_utils.find_kcd2_path()
-            if kcd2_path:
-                self.dp_kcd2_path.SetPath(kcd2_path)
+        kcd2_path = str(kcd2_path)
+        if kcd2_path:
+            self.dp_kcd2_path.SetPath(kcd2_path)
+
+        # Config: Export Path
+        export_path = self._cfg.get(self.CFG_KEY_EXPORT_PATH, "")
+        str(export_path)
+        self.dp_export_path.SetPath(export_path)
+
 
     # ===================================================================================================
     # Event Handlers/Callbacks
     # ===================================================================================================
+    def _on_kcd2_path_change(self, event):
+        '''
+        Called when the KCD2 Path is changed
+
+        :param event: wx Event
+        '''
+        kcd2_path = self.dp_kcd2_path.GetPath()
+        self._set_config_property(self.CFG_KEY_KCD2_PATH, kcd2_path)
+
+    def _on_export_path_change(self, event):
+        '''
+        Called when the Export Path is changed
+
+        :param event: wx Event
+        '''
+        export_path = self.dp_export_path.GetPath()
+        self._set_config_property(self.CFG_KEY_EXPORT_PATH, export_path)
+
     def _on_close(self, event):
         '''
         Application Close Callback. Called when application is closed by the user. Gracefully terminates Asset Finder
@@ -431,6 +476,54 @@ class KCDAssetFinderGui(MainFrame):
             asset = pak.get_asset_by_path(asset_location)
 
         return pak, asset
+
+    def _get_cfg_path(self):
+        '''
+        Gets the Asset Finder's cfg file path
+
+        :return: Absolute path to the Asset Finder cfg file
+        :rtype: str
+        '''
+        cfg_path = os.path.dirname(__file__)
+
+        if "_MEI" in __file__: # (Packed)
+            cfg_path = os.path.dirname(os.path.dirname(cfg_path))
+        cfg_path = os.path.join(cfg_path, "assetfinder.cfg")
+
+        return cfg_path
+
+    def _save_cfg(self):
+        '''
+        Remember directory checkbox callback.
+        :param event:
+        :return:
+        '''
+        with open(self._cfg_path, "w") as cfg_file:
+            cfg_file.write(json.dumps(self._cfg))
+
+    def _load_cfg(self):
+        cfg = {}
+        try:
+            with open(self._cfg_path, "r") as cfg_file:
+                cfg = json.loads(cfg_file.read())
+        except Exception as ex:
+            pass
+        return cfg
+
+    def _set_config_property(self, key, value, save_now=True):
+        '''
+        Sets and saves a configuration property
+
+        :param key: The name of the configuration option to set
+        :type key: str
+        :param value: The value to set for the option
+        :type value: any
+        :param save_now: Whether to immediately save the updated configuration
+        :type save_now: bool
+        '''
+        self._cfg[key] = value
+        if save_now:
+            self._save_cfg()
 
 
 # ===================================================================================================
