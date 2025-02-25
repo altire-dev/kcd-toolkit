@@ -5,6 +5,8 @@ dist/
 # PyInstaller Files
 *.spec
 
-
 # Misc
 images/nexus
+
+# Config
+assetfinder.cfg
