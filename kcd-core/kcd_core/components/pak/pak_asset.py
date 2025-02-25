@@ -90,16 +90,42 @@ class PAKAsset:
         '''
 
         if not self._asset_type:
+            asset_name = self.get_filename().lower()
+
+            # ===================================================================================================
+            # Asset Matchers
             # ===================================================================================================
             # Asset - Material
-            # ===================================================================================================
-            if self.get_filename().endswith(".mtl"):
+            if asset_name.endswith(".mtl"):
                 self._asset_type = ASSET_MATERIAL
-            # ===================================================================================================
             # Asset - Texture
-            # ===================================================================================================
-            if not re.match(".*\.dds(\d+)*$", self.get_filename()):
+            elif re.match(".*\.dds(\.\d+)*$", asset_name):
                 self._asset_type = ASSET_TEXTURE
+            # Asset - Blend Space
+            elif asset_name.endswith(".bspace"):
+                self._asset_type = ASSET_BLEND_SPACE
+            # Asset - CFG
+            elif asset_name.endswith(".cgf"):
+                self._asset_type = ASSET_CGF
+            # Asset - Skin
+            elif asset_name.endswith(".skin"):
+                self._asset_type = ASSET_SKIN
+            # Asset - XML
+            elif asset_name.endswith(".xml"):
+                self._asset_type = ASSET_XML
+            # Asset - Audio
+            elif asset_name.endswith(".ogg"):
+                self._asset_type = ASSET_AUDIO
+            # Asset - Flash
+            elif asset_name.endswith(".gfx"):
+                self._asset_type = ASSET_FLASH
+            # Asset - Character Animations
+            elif asset_name.endswith(".caf"):
+                self._asset_type = ASSET_CHAR_ANIM
+            # Asset - DBA
+            elif asset_name.endswith(".dba"):
+                self._asset_type = ASSET_DBA
+
 
         return self._asset_type
 

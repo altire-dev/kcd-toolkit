@@ -41,6 +41,8 @@ class MainFrame ( wx.Frame ):
         bSizer6111.Add( self.m_staticText711, 3, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
 
         self.dp_kcd2_path = wx.DirPickerCtrl( self.Panel_KCD2Path, wx.ID_ANY, wx.EmptyString, _(u"Select a folder"), wx.DefaultPosition, wx.DefaultSize, wx.DIRP_DEFAULT_STYLE|wx.DIRP_DIR_MUST_EXIST )
+        self.dp_kcd2_path.SetToolTip( _(u"Path to the KCD2 Installation") )
+
         bSizer6111.Add( self.dp_kcd2_path, 7, wx.ALL, 5 )
 
 
@@ -56,7 +58,9 @@ class MainFrame ( wx.Frame ):
 
         bSizer611.Add( self.m_staticText71, 3, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
 
-        self.text_search = wx.TextCtrl( self.m_panel3, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.text_search = wx.TextCtrl( self.m_panel3, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.TE_PROCESS_ENTER )
+        self.text_search.SetToolTip( _(u"Asset search string") )
+
         bSizer611.Add( self.text_search, 7, wx.ALL, 5 )
 
 
@@ -74,9 +78,11 @@ class MainFrame ( wx.Frame ):
 
         bSizer15.Add( self.m_staticText7, 3, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
 
-        choice_asset_typeChoices = [ _(u"Any"), _(u"Texture"), _(u"Material") ]
+        choice_asset_typeChoices = [ _(u"Any"), _(u"Texture"), _(u"Material"), _(u"Blend Space"), _(u"Geometry File (CGF)"), _(u"Skin"), _(u"XML"), _(u"Audio"), _(u"Flash Content"), _(u"Character Animations"), _(u"DBA") ]
         self.choice_asset_type = wx.Choice( self.m_panel3, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, choice_asset_typeChoices, 0 )
         self.choice_asset_type.SetSelection( 0 )
+        self.choice_asset_type.SetToolTip( _(u"Asset type filter") )
+
         bSizer15.Add( self.choice_asset_type, 7, wx.ALL, 5 )
 
 
@@ -154,6 +160,7 @@ class MainFrame ( wx.Frame ):
 
         self.dp_export_path = wx.DirPickerCtrl( sbSizer3.GetStaticBox(), wx.ID_ANY, wx.EmptyString, _(u"Select a folder"), wx.DefaultPosition, wx.DefaultSize, wx.DIRP_DEFAULT_STYLE|wx.DIRP_DIR_MUST_EXIST )
         self.dp_export_path.Enable( False )
+        self.dp_export_path.SetToolTip( _(u"Asset export destination folder") )
 
         bSizer19.Add( self.dp_export_path, 7, wx.ALL, 5 )
 
@@ -208,9 +215,9 @@ class MainFrame ( wx.Frame ):
 class MessageDialog ( wx.Dialog ):
 
     def __init__( self, parent ):
-        wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = _(u"Info"), pos = wx.DefaultPosition, size = wx.DefaultSize, style = wx.DEFAULT_DIALOG_STYLE )
+        wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = _(u"Info"), pos = wx.DefaultPosition, size = wx.Size( 300,150 ), style = wx.DEFAULT_DIALOG_STYLE )
 
-        self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
+        self.SetSizeHints( wx.Size( 300,150 ), wx.DefaultSize )
 
         bSizer25 = wx.BoxSizer( wx.VERTICAL )
 
@@ -219,10 +226,10 @@ class MessageDialog ( wx.Dialog ):
 
         bSizer27 = wx.BoxSizer( wx.VERTICAL )
 
-        self.m_staticText11 = wx.StaticText( self.m_panel5, wx.ID_ANY, _(u"This is the Dialog Message"), wx.DefaultPosition, wx.DefaultSize, 0 )
-        self.m_staticText11.Wrap( -1 )
+        self.dialog_text = wx.StaticText( self.m_panel5, wx.ID_ANY, _(u"This is the Dialog Message"), wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.dialog_text.Wrap( -1 )
 
-        bSizer27.Add( self.m_staticText11, 0, wx.ALL, 5 )
+        bSizer27.Add( self.dialog_text, 1, wx.ALIGN_CENTER_HORIZONTAL|wx.ALL, 5 )
 
 
         bSizer26.Add( bSizer27, 1, wx.EXPAND, 5 )
@@ -230,10 +237,10 @@ class MessageDialog ( wx.Dialog ):
         bSizer28 = wx.BoxSizer( wx.VERTICAL )
 
         self.btn_ok = wx.Button( self.m_panel5, wx.ID_ANY, _(u"OK"), wx.DefaultPosition, wx.DefaultSize, 0 )
-        bSizer28.Add( self.btn_ok, 0, wx.ALL, 5 )
+        bSizer28.Add( self.btn_ok, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALL, 5 )
 
 
-        bSizer26.Add( bSizer28, 1, wx.ALIGN_CENTER_HORIZONTAL, 5 )
+        bSizer26.Add( bSizer28, 0, wx.EXPAND, 5 )
 
 
         self.m_panel5.SetSizer( bSizer26 )
@@ -244,7 +251,6 @@ class MessageDialog ( wx.Dialog ):
 
         self.SetSizer( bSizer25 )
         self.Layout()
-        bSizer25.Fit( self )
 
         self.Centre( wx.BOTH )
 

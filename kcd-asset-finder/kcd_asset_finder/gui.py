@@ -11,6 +11,7 @@ from kcd_core.utils import pak_utils
 # ===================================================================================================
 from .asset_finder import AssetFinder
 from .abs_gui import MainFrame
+from .abs_gui import MessageDialog
 
 # ===================================================================================================
 # KCD Mod Generator GUI Class
@@ -68,12 +69,21 @@ class KCDAssetFinderGui(MainFrame):
         if self.GetParent():
             bind_target = self.GetParent()
 
+        # ===================================================================================================
+        # Button Events
+        # ===================================================================================================
         bind_target.Bind(wx.EVT_BUTTON, self._on_search, self.btn_search)
         bind_target.Bind(wx.EVT_BUTTON, self._on_cancel, self.btn_cancel)
         bind_target.Bind(wx.EVT_BUTTON, self._on_expand_all, self.btn_expand_all)
         bind_target.Bind(wx.EVT_BUTTON, self._on_collapse_all, self.btn_collapse_all)
         bind_target.Bind(wx.EVT_BUTTON, self._on_export, self.btn_export)
+
+        # ===================================================================================================
+        # Misc Events
+        # ===================================================================================================
+        bind_target.Bind(wx.EVT_TEXT_ENTER, self._on_search, self.text_search)
         bind_target.Bind(wx.EVT_TREE_SEL_CHANGED, self._on_tree_selection_changed, self.tree_widget)
+        bind_target.Bind(wx.EVT_CLOSE, self._on_close, self)
 
     def _init_ui(self):
         '''
@@ -94,6 +104,14 @@ class KCDAssetFinderGui(MainFrame):
     # ===================================================================================================
     # Event Handlers/Callbacks
     # ===================================================================================================
+    def _on_close(self, event):
+        '''
+        Application Close Callback. Called when application is closed by the user. Gracefully terminates Asset Finder
+        '''
+        if self._af:
+            self._af.stop_search()
+        self.Destroy()
+
     def _on_export(self, event):
         '''
         The Export Selected Button Callback. Called when the Export Selected button is clicked
@@ -110,7 +128,7 @@ class KCDAssetFinderGui(MainFrame):
         # Validate Input
         # ===================================================================================================
         if not os.path.isdir(export_path):
-            self.label_status.SetLabel("Error: Export Path does not exist")
+            self._display_message("Error", "Export directory not set or does not exist")
             return
 
         # ===================================================================================================
@@ -118,6 +136,19 @@ class KCDAssetFinderGui(MainFrame):
         # ===================================================================================================
         for pak, asset  in self._selected_items:
             pak.export_asset(asset, export_path)
+
+        self._display_message(
+            "Export Complete",
+            "%s asset(s) successfully exported" % len(self._selected_items)
+        )
+
+
+
+    def _on_test(self, event):
+        export_dialog = MessageBox(self)
+        export_dialog.set_message("Wooop" * 10)
+        self.Disable()
+        export_dialog.Show()
 
 
     def _on_tree_selection_changed(self, event):
@@ -159,21 +190,30 @@ class KCDAssetFinderGui(MainFrame):
         '''
 
         # ===================================================================================================
+        # Update UI
+        # ===================================================================================================
+        self.btn_export.Disable()
+        self.dp_export_path.Disable()
+
+        # ===================================================================================================
         # Process User Input
         # ===================================================================================================
         search_string   = self.text_search.GetValue().lower()
-        asset_type      = self.choice_asset_type.GetStringSelection().lower()
+        asset_type      = self.choice_asset_type.GetCurrentSelection()
         kcd2_path       = self.dp_kcd2_path.GetPath()
 
         # ===================================================================================================
         # Validate Input
         # ===================================================================================================
+        if not kcd2_path:
+            self._display_message("Error", "KCD2 Installation Path must be set")
+            return
         if not os.path.isdir(kcd2_path):
-            self.label_status.SetLabel("Error: KCD2 Path Does not exist")
+            self._display_message("Error", "The KCD2 Path Does not exist")
             return
         target_dir = os.path.join(kcd2_path, "Data")
         if not os.path.isdir(target_dir):
-            self.label_status.SetLabel("Error: Invalid KCD2 Path. Data directory not found")
+            self._display_message("Error", "Invalid KCD2 Path. Data directory not found")
             return
 
         # ===================================================================================================
@@ -318,6 +358,22 @@ class KCDAssetFinderGui(MainFrame):
     # ===================================================================================================
     # Internal/Helper Methods
     # ===================================================================================================
+    def _display_message(self, title, message):
+        '''
+        Displays an info message to the user
+
+        :param title: The title of the info message
+        :type title: str
+        :param message: The contents of the info message
+        :type message: str
+        '''
+        export_dialog = MessageBox(self)
+        export_dialog.set_title(title)
+        export_dialog.set_message(message)
+
+        self.Disable()
+        export_dialog.Show()
+
     def _get_icon_path(self):
         '''
         Gets the path to the GUI Icon (.ico) file
@@ -374,3 +430,64 @@ class KCDAssetFinderGui(MainFrame):
             asset = pak.get_asset_by_path(asset_location)
 
         return pak, asset
+
+
+# ===================================================================================================
+# Message Dialog Class
+# ===================================================================================================
+class MessageBox(MessageDialog):
+    '''
+    Message Box for displaying Messages to the user
+    '''
+
+    # ===================================================================================================
+    # Methods
+    # ===================================================================================================
+    def __init__(self, parent):
+        '''
+        Constructor
+        '''
+        super(MessageBox, self).__init__(parent)
+        self._bind_events()
+
+    def _bind_events(self):
+        '''
+        Binds events for the Message Box
+        '''
+        self.Bind(wx.EVT_BUTTON, self._on_ok, self.btn_ok)
+        self.Bind(wx.EVT_CLOSE, self._on_ok, self)
+
+    # ===================================================================================================
+    # Event Handlers/Callbacks
+    # ===================================================================================================
+    def _on_ok(self, event):
+        '''
+        OK Button Callback Handler. Called when the OK button is clicked
+
+        :param event: The Button event
+        :type event: wx.Event
+        '''
+        self.GetParent().Enable()
+        self.Destroy()
+
+
+    # ===================================================================================================
+    # Setters
+    # ===================================================================================================
+    def set_title(self, title):
+        '''
+        Sets the Message Box's title text
+
+        :param title: The new title
+        :type title: str
+        '''
+        self.SetTitle(title)
+
+    def set_message(self, message):
+        '''
+        Sets the Message Box's message text
+
+        :param message: The message to display
+        :type message: str
+        '''
+        self.dialog_text.SetLabel(message)

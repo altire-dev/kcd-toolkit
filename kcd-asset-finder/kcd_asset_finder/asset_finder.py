@@ -4,6 +4,9 @@
 import re
 from threading import Thread
 from threading import Event
+
+import wx
+
 from kcd_core.utils import pak_utils
 from kcd_core.components.pak import PAKFile
 from kcd_core.components.pak import PAKAsset
@@ -42,7 +45,7 @@ class AssetFinder(Thread):
         self._target_dir = target_dir
         self._gui = gui
         self._search_string = ""
-        self._asset_type = "any"
+        self._asset_type = ASSET_ANY
         self._stop_event = Event()
         self._asset_tree = {}
         super(AssetFinder, self).__init__()
@@ -96,13 +99,14 @@ class AssetFinder(Thread):
             self._asset_tree[pak_name] = {}
             self._gui.on_processing_pak(pak_name)
 
-            # Add PAK to tree
-            tid_pak = tree_widget.AppendItem(tid_root, pak_name)
-            if not tree_widget.IsExpanded(tid_root):
-                tree_widget.Expand(tid_root)
-
             # Search PAK Assets
-            self.search_pak_assets(pak_name, pak, tid_pak, tree_widget)
+            matching_assets = self.search_pak_assets(pak)
+            if matching_assets:
+                # Add PAK to tree
+                tid_pak = tree_widget.AppendItem(tid_root, pak_name)
+                if not tree_widget.IsExpanded(tid_root):
+                    tree_widget.Expand(tid_root)
+                self._build_pak_tree(pak, tid_pak, tree_widget, matching_assets)
 
             # Check for Interrupt
             if self.was_stopped():
@@ -117,8 +121,7 @@ class AssetFinder(Thread):
         if not self.was_stopped():
             self._gui.on_search_success()
 
-
-    def search_pak_assets(self, pak_name, pak, tid_pak, tree_widget):
+    def search_pak_assets(self, pak):
         '''
         Searches the specified PAK assets for matches
 
@@ -126,14 +129,34 @@ class AssetFinder(Thread):
         :type pak: PAKFile
         :return:
         '''
-        # ===================================================================================================
+        matching_assets = []
+        # ==================================================================================================
         # Iterate PAK Assets
         # ===================================================================================================
         for asset in pak.get_assets():
-            # print("ASSET: %s" % asset)
-            if not self._is_matching_asset(asset):
-                continue
+            if self._is_matching_asset(asset):
+                matching_assets.append(asset)
+        return matching_assets
 
+    def _build_pak_tree(self, pak, tid_pak, tree_widget, assets):
+        '''
+        Builds the Asset Tree for the PAK File
+
+        :param pak: The PAK file to build the asset tree for
+        :type pak: PAKFile
+        :param tid_pak: The Table Node ID for the PAK File
+        :type tid_pak: str
+        :param tree_widget: The wxTreeCtrl for the results
+        :type tree_widget: wxTreeCtrl
+        :param assets: The PAK File assets
+        :type assets: list[PAKAsset]
+        :return:
+        '''
+
+        # ===================================================================================================
+        # Add PAK Assets to Tree
+        # ===================================================================================================
+        for asset in assets:
             # ===================================================================================================
             # Iterate and Traverse Asset path
             # ===================================================================================================
@@ -145,13 +168,13 @@ class AssetFinder(Thread):
 
                 # Check if tree node already exists for current traversal
                 # True: Add to tree and set that as new parent
-                if current_traversal in self._asset_tree[pak_name]:
-                    tid_parent = self._asset_tree[pak_name][current_traversal]
+                if current_traversal in self._asset_tree[pak.get_name()]:
+                    tid_parent = self._asset_tree[pak.get_name()][current_traversal]
                     continue
 
                 # False! Add current traversal to tree and THEN use THAT as parent node
                 tid_parent = tree_widget.AppendItem(tid_parent, path_section)
-                self._asset_tree[pak_name][current_traversal] = tid_parent
+                self._asset_tree[pak.get_name()][current_traversal] = tid_parent
 
             # Check for Interrupt
             if self.was_stopped():
@@ -186,7 +209,7 @@ class AssetFinder(Thread):
         # ===================================================================================================
         # Match Asset Type
         # ===================================================================================================
-        if self._asset_type != ASSET_ANY and asset.is_of_type(self._asset_type):
+        if self._asset_type != ASSET_ANY and not asset.is_of_type(self._asset_type):
             return False
 
         # ===================================================================================================
