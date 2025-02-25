@@ -33,7 +33,7 @@ In this repository you'll find a collection of tools, utilities, scripts, and mo
       <td>Searches KCD2 PAKs for assets, optionally extracting them</td>
     </tr>
     <tr>
-      <td><a href="./kcd-mod-generator">KCD Mod Suite</a></td>
+      <td><a href="./kcd-mod-suite">KCD Mod Suite</a></td>
       <td>0.1.0 (pre-release)</td>
       <td>Application</td>
       <td>Full KCD2 Mod Suite Application. Combines all KCD Toolkit applications into a single Application Suite and UI</td>
