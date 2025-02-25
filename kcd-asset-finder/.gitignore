@@ -4,3 +4,7 @@ dist/
 
 # PyInstaller Files
 *.spec
+
+
+# Misc
+images/nexus
