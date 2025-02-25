@@ -99,7 +99,8 @@ class KCDAssetFinderGui(MainFrame):
 
             # Auto Detect KCD2 path
             kcd2_path = sys_utils.find_kcd2_path()
-            self.dp_kcd2_path.SetPath(kcd2_path)
+            if kcd2_path:
+                self.dp_kcd2_path.SetPath(kcd2_path)
 
     # ===================================================================================================
     # Event Handlers/Callbacks
