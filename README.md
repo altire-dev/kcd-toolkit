@@ -30,7 +30,7 @@ In this repository you'll find a collection of tools, utilities, scripts, and mo
       <td><a href="./kcd-asset-finder">KCD Asset Finder</a></td>
       <td><a href="https://github.com/altire-dev/kcd-toolkit/releases/latest">1.0.0</a></td>
       <td>Application</td>
-      <td>Searches KCD2 PAKs for assets, with the option to extract them</td>
+      <td>Searches for and extracts assets from KCD2 PAK files</td>
     </tr>
     <tr>
       <td><a href="./kcd-mod-suite">KCD Mod Suite</a></td>
