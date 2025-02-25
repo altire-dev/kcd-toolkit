@@ -2,6 +2,7 @@
 # Imports: External
 # ===================================================================================================
 import wx
+from wx._core import wxAssertionError
 
 # ===================================================================================================
 # Imports: Internal
@@ -39,4 +40,8 @@ class KCDModGenerator:
         Launches the app
         '''
         self._gui.Show()
-        self._app.MainLoop()
+        # Ignore wx Assertion Failures
+        try:
+            self._app.MainLoop()
+        except wxAssertionError as ex:
+            print("WX Assertion error (Likely during app close): %s" % ex)
