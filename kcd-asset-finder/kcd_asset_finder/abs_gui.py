@@ -20,7 +20,7 @@ _ = gettext.gettext
 class MainFrame ( wx.Frame ):
 
     def __init__( self, parent ):
-        wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = _(u"KCD Asset Finder"), pos = wx.DefaultPosition, size = wx.Size( 600,700 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
+        wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = _(u"KCD Asset Finder"), pos = wx.DefaultPosition, size = wx.Size( 650,700 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
 
         self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
 
@@ -38,7 +38,7 @@ class MainFrame ( wx.Frame ):
         self.m_staticText711 = wx.StaticText( self.Panel_KCD2Path, wx.ID_ANY, _(u"KCD2 Path *"), wx.DefaultPosition, wx.DefaultSize, 0 )
         self.m_staticText711.Wrap( -1 )
 
-        bSizer6111.Add( self.m_staticText711, 3, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
+        bSizer6111.Add( self.m_staticText711, 2, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
 
         self.dp_kcd2_path = wx.DirPickerCtrl( self.Panel_KCD2Path, wx.ID_ANY, wx.EmptyString, _(u"Select a folder"), wx.DefaultPosition, wx.DefaultSize, wx.DIRP_DEFAULT_STYLE|wx.DIRP_DIR_MUST_EXIST )
         self.dp_kcd2_path.SetToolTip( _(u"Path to the KCD2 Installation") )
@@ -56,12 +56,17 @@ class MainFrame ( wx.Frame ):
         self.m_staticText71 = wx.StaticText( self.m_panel3, wx.ID_ANY, _(u"Search"), wx.DefaultPosition, wx.DefaultSize, 0 )
         self.m_staticText71.Wrap( -1 )
 
-        bSizer611.Add( self.m_staticText71, 3, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
+        bSizer611.Add( self.m_staticText71, 2, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
+
+        choice_search_typeChoices = [ _(u"Contains"), _(u"Does not Contain"), _(u"Regex") ]
+        self.choice_search_type = wx.Choice( self.m_panel3, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, choice_search_typeChoices, 0 )
+        self.choice_search_type.SetSelection( 0 )
+        bSizer611.Add( self.choice_search_type, 2, wx.ALL, 5 )
 
         self.text_search = wx.TextCtrl( self.m_panel3, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.TE_PROCESS_ENTER )
         self.text_search.SetToolTip( _(u"Asset search string") )
 
-        bSizer611.Add( self.text_search, 7, wx.ALL, 5 )
+        bSizer611.Add( self.text_search, 5, wx.ALL, 5 )
 
 
         bSizer61.Add( bSizer611, 0, wx.EXPAND, 5 )
@@ -76,7 +81,7 @@ class MainFrame ( wx.Frame ):
         self.m_staticText7 = wx.StaticText( self.m_panel3, wx.ID_ANY, _(u"Asset Type"), wx.DefaultPosition, wx.DefaultSize, 0 )
         self.m_staticText7.Wrap( -1 )
 
-        bSizer15.Add( self.m_staticText7, 3, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
+        bSizer15.Add( self.m_staticText7, 2, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
 
         choice_asset_typeChoices = [ _(u"Any"), _(u"Texture"), _(u"Material"), _(u"Blend Space"), _(u"Geometry File (CGF)"), _(u"Skin"), _(u"XML"), _(u"Audio"), _(u"Flash Content"), _(u"Character Animations"), _(u"DBA") ]
         self.choice_asset_type = wx.Choice( self.m_panel3, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, choice_asset_typeChoices, 0 )

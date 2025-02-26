@@ -244,6 +244,7 @@ class KCDAssetFinderGui(MainFrame):
         # ===================================================================================================
         # Process User Input
         # ===================================================================================================
+        search_type     = self.choice_search_type.GetCurrentSelection()
         search_string   = self.text_search.GetValue().lower()
         asset_type      = self.choice_asset_type.GetCurrentSelection()
         kcd2_path       = self.dp_kcd2_path.GetPath()
@@ -279,7 +280,7 @@ class KCDAssetFinderGui(MainFrame):
         # Initiate Search
         # ===================================================================================================
         self._af = AssetFinder(self, target_dir)
-        self._af.start_search(search_string, asset_type)
+        self._af.start_search(search_type, search_string, asset_type)
 
     def _on_expand_all(self, event):
         '''

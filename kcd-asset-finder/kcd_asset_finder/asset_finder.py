@@ -29,6 +29,9 @@ class AssetFinder(Thread):
     # ===================================================================================================
     # Properties
     # ===================================================================================================
+    SEARCH_TYPE_CONTAINS        = 0
+    SEARCH_TYPE_NOT_CONTAINS    = 1
+    SEARCH_TYPE_REGEX           = 2
 
     # ===================================================================================================
     # Methods
@@ -44,16 +47,21 @@ class AssetFinder(Thread):
         '''
         self._target_dir = target_dir
         self._gui = gui
+        self._search_type = self.SEARCH_TYPE_CONTAINS
         self._search_string = ""
         self._asset_type = ASSET_ANY
         self._stop_event = Event()
         self._asset_tree = {}
         super(AssetFinder, self).__init__()
 
-    def start_search(self, search_string, asset_type):
+    def start_search(self, search_type, search_string, asset_type):
         '''
         Starts the Asset search
+
+        :param search_type: The type of Search to run
+        :type search_type: int
         '''
+        self._search_type = search_type
         self._search_string = search_string
         self._asset_type = asset_type
         self.start()
@@ -213,10 +221,18 @@ class AssetFinder(Thread):
             return False
 
         # ===================================================================================================
-        # Match Search String
+        # Process Search Types
         # ===================================================================================================
-        if self._search_string and self._search_string not in asset.get_filename():
-            return False
+        if self._search_string:
+            if self._search_type == self.SEARCH_TYPE_CONTAINS:
+                if self._search_string not in asset.get_filename():
+                    return False
+            elif self._search_type == self.SEARCH_TYPE_NOT_CONTAINS:
+                if self._search_string in asset.get_filename():
+                    return False
+            elif self._search_type == self.SEARCH_TYPE_REGEX:
+                if not re.match(self._search_string, asset.get_filename()):
+                    return False
 
         return True
 
