@@ -169,6 +169,7 @@ class KCDAssetFinderGui(MainFrame):
         # Process Input
         # ===================================================================================================
         export_path = self.dp_export_path.GetPath()
+        preserve_paths  = self.checkbox_preserve_paths.GetValue()
 
         # ===================================================================================================
         # Validate Input
@@ -181,6 +182,8 @@ class KCDAssetFinderGui(MainFrame):
         # Export!
         # ===================================================================================================
         for pak, asset  in self._selected_items:
+            if preserve_paths:
+                export_path = os.path.join(export_path, asset.get_dir()).replace("/", "\\")
             pak.export_asset(asset, export_path)
 
         self._display_message(

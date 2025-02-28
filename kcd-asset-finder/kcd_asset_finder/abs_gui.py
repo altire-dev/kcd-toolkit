@@ -172,6 +172,22 @@ class MainFrame ( wx.Frame ):
 
         bSizer16.Add( bSizer19, 1, wx.EXPAND, 5 )
 
+        bSizer18 = wx.BoxSizer( wx.HORIZONTAL )
+
+        self.m_staticText71111 = wx.StaticText( sbSizer3.GetStaticBox(), wx.ID_ANY, _(u"Preserve Asset Paths"), wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.m_staticText71111.Wrap( -1 )
+
+        bSizer18.Add( self.m_staticText71111, 3, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
+
+        self.checkbox_preserve_paths = wx.CheckBox( sbSizer3.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.checkbox_preserve_paths.SetFont( wx.Font( wx.NORMAL_FONT.GetPointSize(), wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
+        self.checkbox_preserve_paths.SetToolTip( _(u"Preserves and creates the folder structure of extracted assets in the export destination") )
+
+        bSizer18.Add( self.checkbox_preserve_paths, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
+
+
+        bSizer16.Add( bSizer18, 1, wx.EXPAND, 5 )
+
         bSizer6 = wx.BoxSizer( wx.HORIZONTAL )
 
         self.btn_export = wx.Button( sbSizer3.GetStaticBox(), wx.ID_ANY, _(u"Export Selected"), wx.DefaultPosition, wx.DefaultSize, 0 )
