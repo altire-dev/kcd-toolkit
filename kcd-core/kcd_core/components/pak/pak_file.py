@@ -68,6 +68,8 @@ class PAKFile:
         '''
         dest = os.path.join(target_dir, asset.get_filename())
         with ZipFile(self.get_path()) as pak_file:
+            if not os.path.isdir(target_dir):
+                os.makedirs(target_dir)
             with pak_file.open(asset.get_path()) as asset_file, open(dest, 'wb') as out_file:
                 shutil.copyfileobj(asset_file, out_file)
 

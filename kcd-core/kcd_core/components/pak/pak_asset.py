@@ -37,6 +37,7 @@ class PAKAsset:
         self._path_sections = []
         self._asset_type = None
         self._filename = None
+        self._dir = None
 
     # ===================================================================================================
     # Getters
@@ -49,6 +50,15 @@ class PAKAsset:
         :rtype: str
         '''
         return self._path
+
+    def get_dir(self):
+        '''
+        Gets the asset's directory. Effectively its path, minus the asset filename
+        :return:
+        '''
+        if not self._dir:
+            self._dir = "/".join(self.get_path_sections()[:-1])
+        return self._dir
 
     def get_pak(self):
         '''
