@@ -157,7 +157,7 @@ class KCDModGeneratorGui(MainFrame):
         # ===================================================================================================
         mods_path           = os.path.join(kcd2_path, "mods")
         mod_path            = os.path.join(mods_path, id)
-        data_path           = os.path.join(mod_path, "Data")
+        mod_data_path       = os.path.join(mod_path, "Data", id)
         localization_path   = os.path.join(mod_path, "Localization")
         manifest_path = os.path.join(mod_path, "mod.manifest")
 
@@ -172,7 +172,7 @@ class KCDModGeneratorGui(MainFrame):
         # Build Mod file structure
         # ===================================================================================================
         os.mkdir(mod_path)
-        os.mkdir(data_path)
+        os.makedirs(mod_data_path)
         os.mkdir(localization_path)
 
         # ===================================================================================================
