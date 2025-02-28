@@ -16,19 +16,19 @@ In this repository you'll find a collection of tools, utilities, scripts, and mo
   <tbody>
     <tr>
       <td><a href="./kcd-pak-builder">KCD PAK Builder</a></td>
-      <td><a href="https://github.com/altire-dev/kcd-toolkit/releases/latest">1.2.1</a></td>
+      <td><a href="https://github.com/altire-dev/kcd-toolkit/releases/latest">1.3.0</a></td>
       <td>Application</td>
       <td>Quickly and easily turns directories into game-ready PAK files</td>
     </tr>
     <tr>
       <td><a href="./kcd-mod-generator">KCD Mod Generator</a></td>
-      <td><a href="https://github.com/altire-dev/kcd-toolkit/releases/latest">1.1.2</a></td>
+      <td><a href="https://github.com/altire-dev/kcd-toolkit/releases/latest">1.2.0</a></td>
       <td>Application</td>
       <td>Builds the file and folder structure for a new KCD2 mod</td>
     </tr>
     <tr>
       <td><a href="./kcd-asset-finder">KCD Asset Finder</a></td>
-      <td><a href="https://github.com/altire-dev/kcd-toolkit/releases/latest">1.2.0</a></td>
+      <td><a href="https://github.com/altire-dev/kcd-toolkit/releases/latest">1.3.0</a></td>
       <td>Application</td>
       <td>Searches for and extracts assets from KCD2 PAK files</td>
     </tr>
