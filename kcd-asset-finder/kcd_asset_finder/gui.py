@@ -27,8 +27,9 @@ class KCDAssetFinderGui(MainFrame):
     # ===================================================================================================
     ROOT_NODE_LABEL = "PAKs"
 
-    CFG_KEY_KCD2_PATH   = "kcd2_path"
-    CFG_KEY_EXPORT_PATH = "export_path"
+    CFG_KEY_KCD2_PATH       = "kcd2_path"
+    CFG_KEY_EXPORT_PATH     = "export_path"
+    CFG_KEY_PRESERVE_PATHS  = "preserve_export_paths"
 
     # ===================================================================================================
     # Class Functions
@@ -91,6 +92,7 @@ class KCDAssetFinderGui(MainFrame):
         # ===================================================================================================
         bind_target.Bind(wx.EVT_DIRPICKER_CHANGED, self._on_kcd2_path_change, self.dp_kcd2_path)
         bind_target.Bind(wx.EVT_DIRPICKER_CHANGED, self._on_export_path_change, self.dp_export_path)
+        bind_target.Bind(wx.EVT_CHECKBOX, self._on_preserve_paths_change, self.checkbox_preserve_paths)
 
         # ===================================================================================================
         # Misc Events
@@ -128,10 +130,23 @@ class KCDAssetFinderGui(MainFrame):
         str(export_path)
         self.dp_export_path.SetPath(export_path)
 
+        # Config: Preservce Export Paths
+        preserve_paths = self._cfg.get(self.CFG_KEY_PRESERVE_PATHS, False)
+        self.checkbox_preserve_paths.SetValue(preserve_paths)
 
     # ===================================================================================================
     # Event Handlers/Callbacks
     # ===================================================================================================
+    def _on_preserve_paths_change(self, event):
+        '''
+        Called when the "Preserve Paths" checkbox state is changed
+
+        :param event: The Checkbox Event
+        :type event: wx.Event
+        '''
+        preserve_paths = self.checkbox_preserve_paths.GetValue()
+        self._set_config_property(self.CFG_KEY_PRESERVE_PATHS, preserve_paths)
+
     def _on_kcd2_path_change(self, event):
         '''
         Called when the KCD2 Path is changed
@@ -192,7 +207,6 @@ class KCDAssetFinderGui(MainFrame):
         )
 
 
-
     def _on_test(self, event):
         export_dialog = MessageBox(self)
         export_dialog.set_message("Wooop" * 10)
@@ -226,9 +240,11 @@ class KCDAssetFinderGui(MainFrame):
         if can_export:
             self.btn_export.Enable()
             self.dp_export_path.Enable()
+            self.checkbox_preserve_paths.Enable()
         else:
             self.btn_export.Disable()
             self.dp_export_path.Disable()
+            self.checkbox_preserve_paths.Disable()
 
     def _on_search(self, event):
         '''
@@ -243,6 +259,7 @@ class KCDAssetFinderGui(MainFrame):
         # ===================================================================================================
         self.btn_export.Disable()
         self.dp_export_path.Disable()
+        self.checkbox_preserve_paths.Disable()
 
         # ===================================================================================================
         # Process User Input

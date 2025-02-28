@@ -181,6 +181,7 @@ class MainFrame ( wx.Frame ):
 
         self.checkbox_preserve_paths = wx.CheckBox( sbSizer3.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
         self.checkbox_preserve_paths.SetFont( wx.Font( wx.NORMAL_FONT.GetPointSize(), wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
+        self.checkbox_preserve_paths.Enable( False )
         self.checkbox_preserve_paths.SetToolTip( _(u"Preserves and creates the folder structure of extracted assets in the export destination") )
 
         bSizer18.Add( self.checkbox_preserve_paths, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
