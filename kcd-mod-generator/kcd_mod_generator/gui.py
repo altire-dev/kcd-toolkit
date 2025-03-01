@@ -58,7 +58,7 @@ class KCDModGeneratorGui(MainFrame):
         self._cfg_path = self._get_cfg_path()
         self._cfg = self._load_cfg()
         if not self._cfg.get(self.CFG_KEY_KCD2_PATH):
-            kcd2_path = utils.find_kcd2_path()
+            kcd2_path = sys_utils.find_kcd2_path()
             self._cfg[self.CFG_KEY_KCD2_PATH] = kcd2_path
             if kcd2_path:
                 self.write_to_log("KCD2 path auto-detected: %s" % kcd2_path)
