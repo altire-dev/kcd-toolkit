@@ -109,7 +109,7 @@ class PAKAsset:
             if asset_name.endswith(".mtl"):
                 self._asset_type = ASSET_MATERIAL
             # Asset - Texture
-            elif re.match(".*\.dds(\.\d+)*$", asset_name):
+            elif re.match(".*\.dds(\.\d+a?)*$", asset_name):
                 self._asset_type = ASSET_TEXTURE
             # Asset - Blend Space
             elif asset_name.endswith(".bspace"):
